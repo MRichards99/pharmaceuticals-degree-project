@@ -11,26 +11,19 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
-import javax.swing.Box;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.UIManager;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollBar;
-import java.awt.Scrollbar;
-import java.awt.ScrollPane;
 
 public class PharmaceuticalForm extends JFrame {
 
@@ -42,6 +35,7 @@ public class PharmaceuticalForm extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	 
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -59,6 +53,7 @@ public class PharmaceuticalForm extends JFrame {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the frame.
