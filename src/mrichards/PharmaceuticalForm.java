@@ -36,22 +36,14 @@ public class PharmaceuticalForm extends JFrame {
 	 * Launch the application.
 	 */
 	 
-	public static void main(String[] args) {
+	public void openPharmaceuticalForm() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			PharmaceuticalForm frame = new PharmaceuticalForm();
+			frame.setVisible(true);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PharmaceuticalForm frame = new PharmaceuticalForm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 	
 
