@@ -1,6 +1,6 @@
 package mrichards;
 
-public class Pharmaceuticals {
+public class Pharmaceutical {
 
 	private int pharmaceuticalID;
 	private int specialRequirementID;
@@ -12,11 +12,11 @@ public class Pharmaceuticals {
 	
 	
 	
-	public Pharmaceuticals() {
+	public Pharmaceutical() {
 		
 	}
 	
-	public Pharmaceuticals(int pharmaceuticalID, int specialRequirementID, String pharmaceuticalName,
+	public Pharmaceutical(int pharmaceuticalID, int specialRequirementID, String pharmaceuticalName,
 			String description, char medicationType, int recommendedDailyDose) {
 		super();
 		this.pharmaceuticalID = pharmaceuticalID;

@@ -12,7 +12,7 @@
 	<property name="hibernate.connection.password">BrandNewPa55word</property> 
 	
   <!-- List of XML mapping files -->
-  <mapping resource="mrichards/Prescription.hbm.xml"/>
-  <mapping resource="mrichards/PrescriptionItem.hbm.xml"/>
+  <mapping resource="mrichards/Pharmaceutical.hbm.xml"/>
+  <mapping resource="mrichards/SpecialRequirements.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

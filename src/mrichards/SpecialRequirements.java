@@ -9,7 +9,7 @@ public class SpecialRequirements {
 	private String containerType;
 	private boolean storeInFridge;
 	private boolean availableOverTheCounter;
-	private Set<Pharmaceuticals> pharmaceuticals = new HashSet<Pharmaceuticals>(0);
+	private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);
 	
 	
 	public SpecialRequirements() {
@@ -17,7 +17,7 @@ public class SpecialRequirements {
 	}
 	
 	public SpecialRequirements(int specialRequirementID, int containerSize, String containerType, boolean storeInFridge,
-			boolean availableOverTheCounter, Set<Pharmaceuticals> pharmaceuticals) {
+			boolean availableOverTheCounter, Set<Pharmaceutical> pharmaceuticals) {
 		super();
 		this.specialRequirementID = specialRequirementID;
 		this.containerSize = containerSize;
@@ -56,10 +56,10 @@ public class SpecialRequirements {
 	public void setAvailableOverTheCounter(boolean availableOverTheCounter) {
 		this.availableOverTheCounter = availableOverTheCounter;
 	}
-	public Set<Pharmaceuticals> getPharmaceuticals() {
+	public Set<Pharmaceutical> getPharmaceuticals() {
 		return pharmaceuticals;
 	}
-	public void setPharmaceuticals(Set<Pharmaceuticals> pharmaceuticals) {
+	public void setPharmaceuticals(Set<Pharmaceutical> pharmaceuticals) {
 		this.pharmaceuticals = pharmaceuticals;
 	}
 	
