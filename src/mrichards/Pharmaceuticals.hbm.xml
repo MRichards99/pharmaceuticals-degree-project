@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="mrichards.Pharmaceuticals" table=pharmaceuticals">
+		<id name="pharmaceuticalID">
+			<column name="PharmaceuticalID" length="11" not-null="true" />
+			<generator class="assigned" />
+		</id>
+		
+		// Special Req. ID
+		
+		<property name="pharmaceuticalName">
+			<column name="PharmaceuticalName" length="11" not-null="true" />
+		</property>
+		
+		<property name="description">
+			<column name="Description" length="50" not-null="true" />
+		</property>
+		
+		<property name="medicationType">
+			<column name="MedicationType" length="200" not-null="true" />
+		</property>
+		
+		<property name="recommendedDailyDose">
+			<column name="RecommendedDailyDose" length="1" not-null="true" />
+		</property>	
+	</class>
+	
+</hibernate-mapping>
