@@ -1,31 +1,25 @@
 package mrichards;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class SpecialRequirements {
 	private int specialRequirementID;
 	private int containerSize;
 	private String containerType;
-	private boolean storeInFridge;
-	private boolean availableOverTheCounter;
-	private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);
-	
+	private Boolean storeInFridge;
+	private Boolean availableOverTheCounter;
 	
 	public SpecialRequirements() {
 		
 	}
 	
-	public SpecialRequirements(int specialRequirementID, int containerSize, String containerType, boolean storeInFridge,
-			boolean availableOverTheCounter, Set<Pharmaceutical> pharmaceuticals) {
+	public SpecialRequirements(int specialRequirementID, int containerSize, String containerType, Boolean storeInFridge, Boolean availableOverTheCounter) {
 		super();
 		this.specialRequirementID = specialRequirementID;
 		this.containerSize = containerSize;
 		this.containerType = containerType;
 		this.storeInFridge = storeInFridge;
 		this.availableOverTheCounter = availableOverTheCounter;
-		this.pharmaceuticals = pharmaceuticals;
 	}
+	
 	public int getSpecialRequirementID() {
 		return specialRequirementID;
 	}
@@ -44,23 +38,17 @@ public class SpecialRequirements {
 	public void setContainerType(String containerType) {
 		this.containerType = containerType;
 	}
-	public boolean isStoreInFridge() {
+	public Boolean isStoreInFridge() {
 		return storeInFridge;
 	}
-	public void setStoreInFridge(boolean storeInFridge) {
+	public void setStoreInFridge(Boolean storeInFridge) {
 		this.storeInFridge = storeInFridge;
 	}
-	public boolean isAvailableOverTheCounter() {
+	public Boolean isAvailableOverTheCounter() {
 		return availableOverTheCounter;
 	}
-	public void setAvailableOverTheCounter(boolean availableOverTheCounter) {
+	public void setAvailableOverTheCounter(Boolean availableOverTheCounter) {
 		this.availableOverTheCounter = availableOverTheCounter;
-	}
-	public Set<Pharmaceutical> getPharmaceuticals() {
-		return pharmaceuticals;
-	}
-	public void setPharmaceuticals(Set<Pharmaceutical> pharmaceuticals) {
-		this.pharmaceuticals = pharmaceuticals;
 	}
 	
 	

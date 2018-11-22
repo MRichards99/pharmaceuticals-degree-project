@@ -4,15 +4,17 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-	<class name="mrichards.Pharmaceutical" table=pharmaceuticals">
+	<class name="mrichards.Pharmaceutical" table="pharmaceuticals">
 		<id name="pharmaceuticalID">
 			<column name="PharmaceuticalID" length="11" not-null="true" />
 			<generator class="assigned" />
 		</id>
 		
+		<!--
 		<property name="specialRequirementID">
 			<column name="SpecialRequirementID" length="11" not-null="true" />
 		</property>
+		-->
 		
 		<property name="pharmaceuticalName">
 			<column name="PharmaceuticalName" length="11" not-null="true" />
@@ -28,7 +30,10 @@
 		
 		<property name="recommendedDailyDose">
 			<column name="RecommendedDailyDose" length="1" not-null="true" />
-		</property>	
+		</property>
+
+		<many-to-one name="specialRequirementID" class="mrichards.SpecialRequirements" column="SpecialRequirementID" not-null="true" />
+		
 	</class>
 	
 </hibernate-mapping>

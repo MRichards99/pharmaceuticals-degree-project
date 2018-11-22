@@ -4,7 +4,7 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-	<class name="mrichards.SpecialRequirements" table=SpecialRequirements">
+	<class name="mrichards.SpecialRequirements" table="SpecialRequirements">
 		<id name="specialRequirementID">
 			<column name="SpecialRequirementID" length="11" not-null="true" />
 			<generator class="assigned" />
@@ -19,16 +19,13 @@
 		</property>
 		
 		<property name="storeInFridge">
-			<column name="StoreInFridge" type="boolean" not-null="false" />
+			<column name="StoreInFridge" not-null="false" />
 		</property>
 		
 		<property name="availableOverTheCounter">
-			<column name="AvailableOverTheCounter" type="boolean" not-null="false" />
+			<column name="AvailableOverTheCounter" not-null="false" />
 		</property>
-		
-		<set name="specialRequirements" lazy="true" inverse="true" cascade="all-delete-orphan">
-			<key column="SpecialRequirementID" />
-			<one-to-many class="mrichards.Pharmaceuticals" />
+
 	</class>
 	
 </hibernate-mapping>

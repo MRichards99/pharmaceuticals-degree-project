@@ -3,7 +3,7 @@ package mrichards;
 public class Pharmaceutical {
 
 	private int pharmaceuticalID;
-	private int specialRequirementID;
+	private SpecialRequirements specialRequirementID;
 	private String pharmaceuticalName;
 	private String description;
 	private char medicationType;
@@ -16,7 +16,7 @@ public class Pharmaceutical {
 		
 	}
 	
-	public Pharmaceutical(int pharmaceuticalID, int specialRequirementID, String pharmaceuticalName,
+	public Pharmaceutical(int pharmaceuticalID, SpecialRequirements specialRequirementID, String pharmaceuticalName,
 			String description, char medicationType, int recommendedDailyDose) {
 		super();
 		this.pharmaceuticalID = pharmaceuticalID;
@@ -26,16 +26,17 @@ public class Pharmaceutical {
 		this.medicationType = medicationType;
 		this.recommendedDailyDose = recommendedDailyDose;
 	}
+	
 	public int getPharmaceuticalID() {
 		return pharmaceuticalID;
 	}
 	public void setPharmaceuticalID(int pharmaceuticalID) {
 		this.pharmaceuticalID = pharmaceuticalID;
 	}
-	public int getSpecialRequirementID() {
+	public SpecialRequirements getSpecialRequirementID() {
 		return specialRequirementID;
 	}
-	public void setSpecialRequirementID(int specialRequirementID) {
+	public void setSpecialRequirementID(SpecialRequirements specialRequirementID) {
 		this.specialRequirementID = specialRequirementID;
 	}
 	public String getPharmaceuticalName() {
@@ -62,6 +63,4 @@ public class Pharmaceutical {
 	public void setRecommendedDailyDose(int recommendedDailyDose) {
 		this.recommendedDailyDose = recommendedDailyDose;
 	}
-	
-	
 }
