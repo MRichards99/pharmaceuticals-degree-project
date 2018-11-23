@@ -87,7 +87,7 @@ public class HibernateDB {
 		}
 	}
 	
-	protected void finalize() {
+	protected static void finalize() {
 		factory.close();
 		System.out.println("Final method called");
 	}

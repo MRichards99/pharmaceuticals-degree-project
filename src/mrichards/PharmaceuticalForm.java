@@ -46,12 +46,6 @@ public class PharmaceuticalForm extends JFrame {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			PharmaceuticalForm frame = new PharmaceuticalForm();
 			frame.setVisible(true);
-			
-			exitButton.setText("TEST TEXT");
-			System.out.println("WIDTH:" + exitButton.getWidth());
-			
-			//return frame;
-			
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -99,21 +93,21 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_dailyDoseLabel.gridy = 0;
 		optionsPanel.add(dailyDoseLabel, gbc_dailyDoseLabel);
 		
-		JLabel lblPrescribedDailyDose = new JLabel("Prescribed Daily Dose");
-		GridBagConstraints gbc_lblPrescribedDailyDose = new GridBagConstraints();
-		gbc_lblPrescribedDailyDose.fill = GridBagConstraints.BOTH;
-		gbc_lblPrescribedDailyDose.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPrescribedDailyDose.gridx = 2;
-		gbc_lblPrescribedDailyDose.gridy = 0;
-		optionsPanel.add(lblPrescribedDailyDose, gbc_lblPrescribedDailyDose);
+		JLabel prescribedDailyDoseLabel = new JLabel("Prescribed Daily Dose");
+		GridBagConstraints gbc_prescribedDailyDoseLabel = new GridBagConstraints();
+		gbc_prescribedDailyDoseLabel.fill = GridBagConstraints.BOTH;
+		gbc_prescribedDailyDoseLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_prescribedDailyDoseLabel.gridx = 2;
+		gbc_prescribedDailyDoseLabel.gridy = 0;
+		optionsPanel.add(prescribedDailyDoseLabel, gbc_prescribedDailyDoseLabel);
 		
-		JLabel lblDescriptionSpecial = new JLabel("Description & Special Details:");
-		GridBagConstraints gbc_lblDescriptionSpecial = new GridBagConstraints();
-		gbc_lblDescriptionSpecial.fill = GridBagConstraints.BOTH;
-		gbc_lblDescriptionSpecial.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDescriptionSpecial.gridx = 3;
-		gbc_lblDescriptionSpecial.gridy = 0;
-		optionsPanel.add(lblDescriptionSpecial, gbc_lblDescriptionSpecial);
+		JLabel descriptionSpecialDetailsLabel = new JLabel("Description & Special Details:");
+		GridBagConstraints gbc_descriptionSpecialDetailsLabel = new GridBagConstraints();
+		gbc_descriptionSpecialDetailsLabel.fill = GridBagConstraints.BOTH;
+		gbc_descriptionSpecialDetailsLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_descriptionSpecialDetailsLabel.gridx = 3;
+		gbc_descriptionSpecialDetailsLabel.gridy = 0;
+		optionsPanel.add(descriptionSpecialDetailsLabel, gbc_descriptionSpecialDetailsLabel);
 		
 		JLabel durationLabel = new JLabel("Duration:");
 		GridBagConstraints gbc_durationLabel = new GridBagConstraints();
