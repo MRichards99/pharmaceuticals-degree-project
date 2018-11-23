@@ -22,35 +22,49 @@ import javax.swing.JTextArea;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.Vector;
+
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class PharmaceuticalForm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField totalPrescriptionItemsField;
 	private JTextField totalNumberOfContainersField;
+	private JButton exitButton;
+	private JComboBox pharmaceuticalNameComboBox;
 	private JTable table;
 
 	/**
 	 * Launch the application.
 	 */
 	 
-	public void openPharmaceuticalForm() {
+	public void createForm() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			PharmaceuticalForm frame = new PharmaceuticalForm();
 			frame.setVisible(true);
+			
+			exitButton.setText("TEST TEXT");
+			System.out.println("WIDTH:" + exitButton.getWidth());
+			
+			//return frame;
+			
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 
 	/**
 	 * Create the frame.
 	 */
 	public PharmaceuticalForm() {
+		// Creating connection with Hibernate
+		HibernateDB databaseConnection = new HibernateDB();
+		
+		// General frame configuration
 		setPreferredSize(new Dimension(800, 800));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 996, 364);
@@ -59,6 +73,7 @@ public class PharmaceuticalForm extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		// Configuring optionsPanel
 		JPanel optionsPanel = new JPanel();
 		contentPane.add(optionsPanel, BorderLayout.NORTH);
 		GridBagLayout gbl_optionsPanel = new GridBagLayout();
@@ -108,7 +123,12 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_durationLabel.gridy = 0;
 		optionsPanel.add(durationLabel, gbc_durationLabel);
 		
-		JComboBox pharmaceuticalNameComboBox = new JComboBox();
+		pharmaceuticalNameComboBox = new JComboBox();
+		Vector<String> pharmaceuticalNames = databaseConnection.getPharmaceuticalNames();
+		for(String pharmaceuticalName : pharmaceuticalNames) {
+			pharmaceuticalNameComboBox.addItem(pharmaceuticalName);
+		}
+		
 		GridBagConstraints gbc_pharmaceuticalNameComboBox = new GridBagConstraints();
 		gbc_pharmaceuticalNameComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_pharmaceuticalNameComboBox.gridx = 0;
@@ -188,20 +208,6 @@ public class PharmaceuticalForm extends JFrame {
 		contentPane.add(tablePanel, BorderLayout.CENTER);
 		tablePanel.setLayout(new BorderLayout(0, 0));
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column"
-			}
-		));
-		tablePanel.add(table, BorderLayout.NORTH);
-		
 		JPanel statusPanel_ = new JPanel();
 		tablePanel.add(statusPanel_, BorderLayout.SOUTH);
 		statusPanel_.setLayout(new GridLayout(0, 2, 0, 0));
@@ -211,6 +217,24 @@ public class PharmaceuticalForm extends JFrame {
 		
 		JPanel cPanel = new JPanel();
 		statusPanel_.add(cPanel);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		tablePanel.add(scrollPane, BorderLayout.CENTER);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+			},
+			new String[] {
+				"Product Name", "Duration", "Prescribed Daily Dose", "Number of Containers", "Over the Counter", "Comments"
+			}
+		));
+		scrollPane.setViewportView(table);
 		
 		JPanel statusPanel = new JPanel();
 		contentPane.add(statusPanel, BorderLayout.SOUTH);
@@ -245,9 +269,9 @@ public class PharmaceuticalForm extends JFrame {
 		contentPane.add(buttonPanel, BorderLayout.EAST);
 		GridBagLayout gbl_buttonPanel = new GridBagLayout();
 		gbl_buttonPanel.columnWidths = new int[] {79, 0};
-		gbl_buttonPanel.rowHeights = new int[] {25, 25, 25};
+		gbl_buttonPanel.rowHeights = new int[] {25, 25, 0, 0, 0, 0, 0, 25};
 		gbl_buttonPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_buttonPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_buttonPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		buttonPanel.setLayout(gbl_buttonPanel);
 		
 		JButton removeButton = new JButton("Remove");
@@ -260,10 +284,17 @@ public class PharmaceuticalForm extends JFrame {
 		
 		JButton clearButton = new JButton("Clear");
 		GridBagConstraints gbc_clearButton = new GridBagConstraints();
+		gbc_clearButton.insets = new Insets(0, 0, 5, 0);
 		gbc_clearButton.fill = GridBagConstraints.BOTH;
 		gbc_clearButton.gridx = 0;
 		gbc_clearButton.gridy = 1;
 		buttonPanel.add(clearButton, gbc_clearButton);
+		
+		exitButton = new JButton("Exit");
+		GridBagConstraints gbc_exitButton = new GridBagConstraints();
+		gbc_exitButton.gridx = 0;
+		gbc_exitButton.gridy = 6;
+		buttonPanel.add(exitButton, gbc_exitButton);
 	}
 
 }
