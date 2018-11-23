@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -71,6 +73,29 @@ public class HibernateDB {
 		return pharmaceuticalNames;
 	}
 	
+	public Pharmaceutical getPharmaceutical(String selectedPharmaceuticalName) {
+		Session session = factory.openSession();
+		Pharmaceutical selectedPharmaceutical = null;
+		try {
+			Query query = session.createQuery("FROM Pharmaceutical WHERE pharmaceuticalName = '" + selectedPharmaceuticalName + "'");
+			query.setFirstResult(0);
+			query.setMaxResults(1);
+			List<Pharmaceutical> pharmaceutcials = ((org.hibernate.query.Query) query).list();
+			//for (Iterator<Pharmaceutical> iterator = pharmaceutials.iterator(); iterator.hasNext();) {
+				//selectedPharmaceutical = (Pharmaceutical) iterator.next();
+			//}
+			//System.out.println(pharmaceutcials.size());
+			System.out.println(pharmaceutcials.get(0));
+			selectedPharmaceutical = pharmaceutcials.get(0);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return selectedPharmaceutical;
+		
+	}
+	
 	public void getSpecialRequirementsData() {
 		Session session = factory.openSession();
 		try {
@@ -87,7 +112,7 @@ public class HibernateDB {
 		}
 	}
 	
-	protected static void finalize() {
+	protected void finalize() {
 		factory.close();
 		System.out.println("Final method called");
 	}
