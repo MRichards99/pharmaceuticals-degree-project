@@ -337,13 +337,20 @@ public class PharmaceuticalForm extends JFrame {
 		
 		JButton removeButton = new JButton("Remove");
 		prescriptionPanel.add(removeButton);
+		removeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {	
+				prescription.removePrescriptionItem((String) pharmaceuticalNameComboBox.getSelectedItem());
+				updateTable();
+			}
+		});
 	}
 	
 	public void updateTable() {
-		// Like refresh of the table
-		// Get prescriptionItems arraylist and place the contents of it into table
 		ArrayList<PrescriptionItem> prescriptionItems = prescription.getPrescriptionItems();
+		// Clear current contents of table
 		tableModel.setRowCount(0);
+		// Insert updated version of prescriptionItems
 		for (int i = 0; i < prescriptionItems.size(); i++) {
 			Object[] data = {prescriptionItems.get(i).getPharmaceuticalName(),
 							 prescriptionItems.get(i).getDuration(),

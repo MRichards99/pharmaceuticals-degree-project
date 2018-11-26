@@ -22,7 +22,11 @@ public class Prescription {
 	
 	public void removePrescriptionItem(String pharmaceuticalName) {
 		// Remove the PrescriptionItem from the prescription
-		
+		for (int i = 0; i < prescriptionItems.size(); i++) {
+			if(prescriptionItems.get(i).getPharmaceuticalName().equals(pharmaceuticalName)) {
+				prescriptionItems.remove(i);
+			}
+		}
 	}
 	
 	public void clearPrescription() {
