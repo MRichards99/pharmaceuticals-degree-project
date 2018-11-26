@@ -10,12 +10,6 @@
 			<generator class="assigned" />
 		</id>
 		
-		<!--
-		<property name="specialRequirementID">
-			<column name="SpecialRequirementID" length="11" not-null="true" />
-		</property>
-		-->
-		
 		<property name="pharmaceuticalName">
 			<column name="PharmaceuticalName" length="11" not-null="true" />
 		</property>
