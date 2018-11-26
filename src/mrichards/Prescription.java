@@ -30,7 +30,9 @@ public class Prescription {
 	}
 	
 	public void clearPrescription() {
-		// Remove all items from the prescription
+		// Using clear() instead of removeAll() due to decreased time complexity
+		// clear() is O(n) whereas removeAll() is O(n^2)
+		prescriptionItems.clear();
 	}
 
 	/*

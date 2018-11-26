@@ -334,6 +334,13 @@ public class PharmaceuticalForm extends JFrame {
 		
 		JButton clearButton = new JButton("Clear");
 		prescriptionPanel.add(clearButton);
+		clearButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				prescription.clearPrescription();
+				updateTable();
+			}
+		});
 		
 		JButton removeButton = new JButton("Remove");
 		prescriptionPanel.add(removeButton);
