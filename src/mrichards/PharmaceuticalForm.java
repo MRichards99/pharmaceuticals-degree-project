@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.Box;
@@ -276,6 +277,30 @@ public class PharmaceuticalForm extends JFrame {
 		));
 		scrollPane.setViewportView(table);
 		
+		// Aligning table columns
+		// Right alignment
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		// Left alignment
+		DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+		leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		// Product Name
+		table.getColumnModel().getColumn(0).setCellRenderer(leftRenderer);
+		// Duration
+		table.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
+		// Prescribed Daily Dose
+		table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+		// Number of Containers
+		table.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+		// Over the Counter
+		table.getColumnModel().getColumn(4).setCellRenderer(leftRenderer);
+		// Comments
+		table.getColumnModel().getColumn(5).setCellRenderer(leftRenderer);
+		
+		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.EAST);
 		buttonPanel.setLayout(new BorderLayout(0, 0));
