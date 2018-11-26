@@ -5,13 +5,20 @@ public class PrescriptionItem {
 	private int prescribedDailyDose;
 	private int duration;
 	private int containerSize;
-	private boolean counterAvailability;
+	private int counterAvailability;
 	private String comments;
 	
-	
-	public PrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, int containerSize, boolean counterAvailability, String comments) {
-		
+	public PrescriptionItem(String pharmaceuticalName, int duration, int prescribedDailyDose, int containerSize,
+							int counterAvailability, String comments) {
+		this.pharmaceuticalName = pharmaceuticalName;
+		this.prescribedDailyDose = prescribedDailyDose;
+		this.duration = duration;
+		this.containerSize = containerSize;
+		this.counterAvailability = counterAvailability;
+		this.comments = comments;
 	}
+
+
 
 
 	/*
@@ -58,12 +65,12 @@ public class PrescriptionItem {
 	}
 
 
-	public boolean isCounterAvailability() {
+	public int isCounterAvailability() {
 		return counterAvailability;
 	}
 
 
-	public void setCounterAvailability(boolean counterAvailability) {
+	public void setCounterAvailability(int counterAvailability) {
 		this.counterAvailability = counterAvailability;
 	}
 

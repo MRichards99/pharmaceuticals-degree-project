@@ -1,16 +1,28 @@
 package mrichards;
 
+import java.util.ArrayList;
+
 public class Prescription {
-	private String prescriptionItems;	// Type may be changed
+	private ArrayList<PrescriptionItem> prescriptionItems;
 	private int numberOfPharmaceuticals;
 	private int numberOfContainers;
 	
-	public void addPrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, boolean counterAvailability, String comments) {
+	
+
+	public Prescription() {
+		prescriptionItems = new ArrayList<>();
+	}
+
+	public void addPrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, int containerSize, int overTheCounter, String comments) {
+		// If there's already an existing item in the list, append the incoming one to existing one, not overwrite
 		
+		PrescriptionItem newItem = new PrescriptionItem(pharmaceuticalName, duration, prescribedDailyDose, containerSize, overTheCounter, comments);
+		prescriptionItems.add(newItem);
 	}
 	
 	public void removePrescriptionItem(String pharmaceuticalName) {
 		// Remove the PrescriptionItem from the prescription
+		
 	}
 	
 	public void clearPrescription() {
@@ -23,11 +35,11 @@ public class Prescription {
 	 * Any set clauses to be set private?
 	 */
 	
-	public String getPrescriptionItems() {
+	public ArrayList<PrescriptionItem> getPrescriptionItems() {
 		return prescriptionItems;
 	}
 
-	public void setPrescriptionItems(String prescriptionItems) {
+	public void setPrescriptionItems(ArrayList<PrescriptionItem> prescriptionItems) {
 		this.prescriptionItems = prescriptionItems;
 	}
 

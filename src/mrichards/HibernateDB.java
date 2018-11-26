@@ -81,12 +81,11 @@ public class HibernateDB {
 			query.setFirstResult(0);
 			query.setMaxResults(1);
 			List<Pharmaceutical> pharmaceutcials = ((org.hibernate.query.Query) query).list();
-			System.out.println(pharmaceutcials.get(0));
 			selectedPharmaceutical = pharmaceutcials.get(0);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
-			session.close();
+			//session.close();
 		}
 		return selectedPharmaceutical;
 		

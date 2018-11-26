@@ -24,6 +24,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.UIManager;
@@ -44,6 +45,9 @@ public class PharmaceuticalForm extends JFrame {
 	private JLabel dailyDoseDisplay;
 	private JSpinner prescribedDailyDoseSelect;
 	private JTextArea pharmaceuticalDescriptionTextArea;
+	private Pharmaceutical currentPharmaceutical;
+	private Prescription prescription = new Prescription();
+	DefaultTableModel tableModel;
 
 	/**
 	 * Create and open form.
@@ -65,6 +69,7 @@ public class PharmaceuticalForm extends JFrame {
 	public PharmaceuticalForm() {
 		// Creating connection with Hibernate
 		HibernateDB databaseConnection = new HibernateDB();
+		
 		
 		// General frame configuration
 		setPreferredSize(new Dimension(800, 800));
@@ -153,7 +158,7 @@ public class PharmaceuticalForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String selectedPharmaceutical = (String) pharmaceuticalNameComboBox.getSelectedItem(); 
-				Pharmaceutical currentPharmaceutical = databaseConnection.getPharmaceutical(selectedPharmaceutical);
+				currentPharmaceutical = databaseConnection.getPharmaceutical(selectedPharmaceutical);
 				dailyDoseDisplay.setText(String.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
 				prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));				
 				
@@ -192,8 +197,8 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_addCommentCheckBox.gridy = 1;
 		optionsPanel.add(addCommentCheckBox, gbc_addCommentCheckBox);
 		
-		JButton addButton = new JButton("Add..");
-		addButton.setHorizontalAlignment(SwingConstants.LEFT);
+		JButton addButton = new JButton("Add");
+		addButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
 		gbc_addButton.anchor = GridBagConstraints.WEST;
 		gbc_addButton.fill = GridBagConstraints.BOTH;
@@ -201,6 +206,21 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_addButton.gridx = 6;
 		gbc_addButton.gridy = 1;
 		optionsPanel.add(addButton, gbc_addButton);
+		
+		addButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// Insert pharmaceutical selected by user into prescription
+				
+				prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
+												 (Integer) prescribedDailyDoseSelect.getValue(),
+												 (Integer) durationSpinner.getValue(),
+												 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
+												 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
+												 pharmaceuticalDescriptionTextArea.getText());
+				updateTable();
+			}
+		});
 		
 		JLabel prescriptionLabel = new JLabel("Prescription Table:");
 		GridBagConstraints gbc_prescriptionLabel = new GridBagConstraints();
@@ -256,25 +276,15 @@ public class PharmaceuticalForm extends JFrame {
 		tablePanel.add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		tableModel = new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
 			},
 			new String[] {
 				"Product Name", "Duration", "Prescribed Daily Dose", "Number of Containers", "Over the Counter", "Comments"
 			}
-		));
+		);
+		
+		table.setModel(tableModel);
 		scrollPane.setViewportView(table);
 		
 		// Aligning table columns
@@ -299,7 +309,10 @@ public class PharmaceuticalForm extends JFrame {
 		// Comments
 		table.getColumnModel().getColumn(5).setCellRenderer(leftRenderer);
 		
+		// Centre align table headers
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		
+		
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.EAST);
@@ -325,5 +338,22 @@ public class PharmaceuticalForm extends JFrame {
 		JButton removeButton = new JButton("Remove");
 		prescriptionPanel.add(removeButton);
 	}
-
+	
+	public void updateTable() {
+		// Like refresh of the table
+		// Get prescriptionItems arraylist and place the contents of it into table
+		ArrayList<PrescriptionItem> prescriptionItems = prescription.getPrescriptionItems();
+		tableModel.setRowCount(0);
+		for (int i = 0; i < prescriptionItems.size(); i++) {
+			Object[] data = {prescriptionItems.get(i).getPharmaceuticalName(),
+							 prescriptionItems.get(i).getDuration(),
+							 prescriptionItems.get(i).getPrescribedDailyDose(),
+							 prescriptionItems.get(i).getContainerSize(),
+							 prescriptionItems.get(i).isCounterAvailability(),
+							 prescriptionItems.get(i).getComments()
+			};
+			tableModel.addRow(data);
+		}
+	}
 }
+	

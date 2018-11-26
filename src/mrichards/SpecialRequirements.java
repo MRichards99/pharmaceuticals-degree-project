@@ -4,14 +4,14 @@ public class SpecialRequirements {
 	private int specialRequirementID;
 	private int containerSize;
 	private String containerType;
-	private int storeInFridge;
+	private Integer storeInFridge;
 	private int availableOverTheCounter;
 	
 	public SpecialRequirements() {
 		
 	}
 	
-	public SpecialRequirements(int specialRequirementID, int containerSize, String containerType, int storeInFridge, int availableOverTheCounter) {
+	public SpecialRequirements(int specialRequirementID, int containerSize, String containerType, Integer storeInFridge, int availableOverTheCounter) {
 		super();
 		this.specialRequirementID = specialRequirementID;
 		this.containerSize = containerSize;
@@ -41,13 +41,17 @@ public class SpecialRequirements {
 	public int isStoreInFridge() {
 		return storeInFridge;
 	}
-	public void setStoreInFridge(int storeInFridge) {
+	public int setStoreInFridge(Integer storeInFridge) {
 		this.storeInFridge = storeInFridge;
+		if (storeInFridge != null)
+			return storeInFridge.intValue();
+		else
+			return -1;
 	}
 	public int isAvailableOverTheCounter() {
 		return availableOverTheCounter;
 	}
-	public void setAvailableOverTheCounter(int availableOverTheCounter) {
+	public void setAvailableOverTheCounter(Integer availableOverTheCounter) {
 		this.availableOverTheCounter = availableOverTheCounter;
 	}
 	
