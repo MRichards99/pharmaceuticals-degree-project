@@ -81,10 +81,6 @@ public class HibernateDB {
 			query.setFirstResult(0);
 			query.setMaxResults(1);
 			List<Pharmaceutical> pharmaceutcials = ((org.hibernate.query.Query) query).list();
-			//for (Iterator<Pharmaceutical> iterator = pharmaceutials.iterator(); iterator.hasNext();) {
-				//selectedPharmaceutical = (Pharmaceutical) iterator.next();
-			//}
-			//System.out.println(pharmaceutcials.size());
 			System.out.println(pharmaceutcials.get(0));
 			selectedPharmaceutical = pharmaceutcials.get(0);
 		} catch (HibernateException e) {
