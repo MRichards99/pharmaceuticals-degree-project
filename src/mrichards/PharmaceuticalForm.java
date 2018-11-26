@@ -281,6 +281,13 @@ public class PharmaceuticalForm extends JFrame {
 		buttonPanel.setLayout(new BorderLayout(0, 0));
 		
 		exitButton = new JButton("Exit");
+		exitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		
 		buttonPanel.add(exitButton, BorderLayout.SOUTH);
 		
 		JPanel prescriptionPanel = new JPanel();
