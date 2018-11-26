@@ -29,6 +29,8 @@ import java.util.Vector;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 
 public class PharmaceuticalForm extends JFrame {
 
@@ -114,6 +116,16 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_descriptionSpecialDetailsLabel.gridy = 0;
 		optionsPanel.add(descriptionSpecialDetailsLabel, gbc_descriptionSpecialDetailsLabel);
 		
+		JTextArea pharmaceuticalDescriptionTextArea = new JTextArea();
+		pharmaceuticalDescriptionTextArea.setLineWrap(true);
+		GridBagConstraints gbc_pharmaceuticalDescriptionTextArea = new GridBagConstraints();
+		gbc_pharmaceuticalDescriptionTextArea.gridheight = 2;
+		gbc_pharmaceuticalDescriptionTextArea.fill = GridBagConstraints.BOTH;
+		gbc_pharmaceuticalDescriptionTextArea.insets = new Insets(0, 0, 5, 5);
+		gbc_pharmaceuticalDescriptionTextArea.gridx = 3;
+		gbc_pharmaceuticalDescriptionTextArea.gridy = 1;
+		optionsPanel.add(pharmaceuticalDescriptionTextArea, gbc_pharmaceuticalDescriptionTextArea);
+		
 		JLabel durationLabel = new JLabel("Duration:");
 		GridBagConstraints gbc_durationLabel = new GridBagConstraints();
 		gbc_durationLabel.fill = GridBagConstraints.BOTH;
@@ -163,17 +175,6 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_dailyDoseDisplay.gridy = 1;
 		optionsPanel.add(dailyDoseDisplay, gbc_dailyDoseDisplay);
 		
-		JTextArea pharmaceuticalDescriptionTextArea = new JTextArea();
-		pharmaceuticalDescriptionTextArea.setLineWrap(true);
-		pharmaceuticalDescriptionTextArea.setText("DETAILS ABOUT PHARMACEUTICAL");
-		GridBagConstraints gbc_pharmaceuticalDescriptionTextArea = new GridBagConstraints();
-		gbc_pharmaceuticalDescriptionTextArea.gridheight = 2;
-		gbc_pharmaceuticalDescriptionTextArea.fill = GridBagConstraints.BOTH;
-		gbc_pharmaceuticalDescriptionTextArea.insets = new Insets(0, 0, 5, 5);
-		gbc_pharmaceuticalDescriptionTextArea.gridx = 3;
-		gbc_pharmaceuticalDescriptionTextArea.gridy = 1;
-		optionsPanel.add(pharmaceuticalDescriptionTextArea, gbc_pharmaceuticalDescriptionTextArea);
-		
 		JSpinner durationSpinner = new JSpinner();
 		GridBagConstraints gbc_durationSpinner = new GridBagConstraints();
 		gbc_durationSpinner.fill = GridBagConstraints.BOTH;
@@ -220,15 +221,35 @@ public class PharmaceuticalForm extends JFrame {
 		contentPane.add(tablePanel, BorderLayout.CENTER);
 		tablePanel.setLayout(new BorderLayout(0, 0));
 		
-		JPanel statusPanel_ = new JPanel();
-		tablePanel.add(statusPanel_, BorderLayout.SOUTH);
-		statusPanel_.setLayout(new GridLayout(0, 2, 0, 0));
+		JPanel statusPanel = new JPanel();
+		tablePanel.add(statusPanel, BorderLayout.SOUTH);
+		statusPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JPanel pPanel = new JPanel();
-		statusPanel_.add(pPanel);
+		statusPanel.add(pPanel);
+		
+		JLabel totalPrescriptionItemsLabel = new JLabel("Total Number of Prescription Items:");
+		totalPrescriptionItemsLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+		pPanel.add(totalPrescriptionItemsLabel);
+		totalPrescriptionItemsLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		totalPrescriptionItemsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		totalPrescriptionItemsField = new JTextField();
+		pPanel.add(totalPrescriptionItemsField);
+		totalPrescriptionItemsField.setHorizontalAlignment(SwingConstants.LEFT);
+		totalPrescriptionItemsField.setColumns(10);
 		
 		JPanel cPanel = new JPanel();
-		statusPanel_.add(cPanel);
+		statusPanel.add(cPanel);
+		
+		JLabel totalNumberOfContainersLabel = new JLabel("Total Number of Containers:");
+		totalNumberOfContainersLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+		totalNumberOfContainersLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		cPanel.add(totalNumberOfContainersLabel);
+		
+		totalNumberOfContainersField = new JTextField();
+		cPanel.add(totalNumberOfContainersField);
+		totalNumberOfContainersField.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		tablePanel.add(scrollPane, BorderLayout.CENTER);
@@ -241,6 +262,13 @@ public class PharmaceuticalForm extends JFrame {
 				{null, null, null, null, null, null},
 				{null, null, null, null, null, null},
 				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
 			},
 			new String[] {
 				"Product Name", "Duration", "Prescribed Daily Dose", "Number of Containers", "Over the Counter", "Comments"
@@ -248,65 +276,22 @@ public class PharmaceuticalForm extends JFrame {
 		));
 		scrollPane.setViewportView(table);
 		
-		JPanel statusPanel = new JPanel();
-		contentPane.add(statusPanel, BorderLayout.SOUTH);
-		statusPanel.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		JPanel prescriptionItemsDataPanel = new JPanel();
-		statusPanel.add(prescriptionItemsDataPanel);
-		prescriptionItemsDataPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		JLabel totalPrescriptionItemsLabel = new JLabel("Total Number of Prescription Items:");
-		totalPrescriptionItemsLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		totalPrescriptionItemsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		prescriptionItemsDataPanel.add(totalPrescriptionItemsLabel);
-		
-		totalPrescriptionItemsField = new JTextField();
-		totalPrescriptionItemsField.setHorizontalAlignment(SwingConstants.LEFT);
-		prescriptionItemsDataPanel.add(totalPrescriptionItemsField);
-		totalPrescriptionItemsField.setColumns(10);
-		
-		JPanel containerDataPanel = new JPanel();
-		statusPanel.add(containerDataPanel);
-		containerDataPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JLabel totalNumberOfContainersLabel = new JLabel("Total Number of Containers:");
-		containerDataPanel.add(totalNumberOfContainersLabel);
-		
-		totalNumberOfContainersField = new JTextField();
-		containerDataPanel.add(totalNumberOfContainersField);
-		totalNumberOfContainersField.setColumns(10);
-		
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.EAST);
-		GridBagLayout gbl_buttonPanel = new GridBagLayout();
-		gbl_buttonPanel.columnWidths = new int[] {79, 0};
-		gbl_buttonPanel.rowHeights = new int[] {25, 25, 0, 0, 0, 0, 0, 25};
-		gbl_buttonPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_buttonPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		buttonPanel.setLayout(gbl_buttonPanel);
-		
-		JButton removeButton = new JButton("Remove");
-		GridBagConstraints gbc_removeButton = new GridBagConstraints();
-		gbc_removeButton.fill = GridBagConstraints.BOTH;
-		gbc_removeButton.insets = new Insets(0, 0, 5, 0);
-		gbc_removeButton.gridx = 0;
-		gbc_removeButton.gridy = 0;
-		buttonPanel.add(removeButton, gbc_removeButton);
-		
-		JButton clearButton = new JButton("Clear");
-		GridBagConstraints gbc_clearButton = new GridBagConstraints();
-		gbc_clearButton.insets = new Insets(0, 0, 5, 0);
-		gbc_clearButton.fill = GridBagConstraints.BOTH;
-		gbc_clearButton.gridx = 0;
-		gbc_clearButton.gridy = 1;
-		buttonPanel.add(clearButton, gbc_clearButton);
+		buttonPanel.setLayout(new BorderLayout(0, 0));
 		
 		exitButton = new JButton("Exit");
-		GridBagConstraints gbc_exitButton = new GridBagConstraints();
-		gbc_exitButton.gridx = 0;
-		gbc_exitButton.gridy = 6;
-		buttonPanel.add(exitButton, gbc_exitButton);
+		buttonPanel.add(exitButton, BorderLayout.SOUTH);
+		
+		JPanel prescriptionPanel = new JPanel();
+		buttonPanel.add(prescriptionPanel, BorderLayout.NORTH);
+		prescriptionPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JButton clearButton = new JButton("Clear");
+		prescriptionPanel.add(clearButton);
+		
+		JButton removeButton = new JButton("Remove");
+		prescriptionPanel.add(removeButton);
 	}
 
 }
