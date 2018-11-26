@@ -18,9 +18,6 @@ public class PrescriptionItem {
 		this.comments = comments;
 	}
 
-
-
-
 	/*
 	 * Getters and setters
 	 */
