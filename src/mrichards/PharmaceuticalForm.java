@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.SpinnerNumberModel;
 
 public class PharmaceuticalForm extends JFrame {
 
@@ -182,6 +183,7 @@ public class PharmaceuticalForm extends JFrame {
 		optionsPanel.add(dailyDoseDisplay, gbc_dailyDoseDisplay);
 		
 		JSpinner durationSpinner = new JSpinner();
+		durationSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		GridBagConstraints gbc_durationSpinner = new GridBagConstraints();
 		gbc_durationSpinner.fill = GridBagConstraints.BOTH;
 		gbc_durationSpinner.insets = new Insets(0, 0, 5, 5);
