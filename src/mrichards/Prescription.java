@@ -14,12 +14,7 @@ public class Prescription {
 	}
 
 	public void addPrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, int containerSize, int overTheCounter, String comments) {
-		// If there's already an existing item in the list, append the incoming one to existing one, not overwrite
-		// New duration should be added to the existing entry's duration and dose should be prescriptionItem's presribed dose or user defined one, whichever
-		// is greater
-		
 		boolean appendPrescription = false;
-		int appendPrescriptionIndex = 0;
 		
 		for(int i = 0; i < prescriptionItems.size(); i++) {
 			String search = prescriptionItems.get(i).getPharmaceuticalName();
@@ -29,29 +24,18 @@ public class Prescription {
 				// Adding new duration onto existing one
 				int existingDuration = prescriptionItems.get(i).getDuration();
 				int newDuration = existingDuration + duration;
-				
 				prescriptionItems.get(i).setDuration(newDuration);
-				//prescriptionItems.get(i).set
-				if (prescribedDailyDose > prescriptionItems.get(i).getPrescribedDailyDose()) {
-					prescriptionItems.get(i).setDailyDosage(prescribedDailyDose);
-				}
 				
-				// Do append here
-				// Set newPrescriptionItemNeeded to false
-				// So that's not done below
-				// Keep break in
+				// Set dose to whichever figure is higher
+				if (prescribedDailyDose > prescriptionItems.get(i).getPrescribedDailyDose())
+					prescriptionItems.get(i).setDailyDosage(prescribedDailyDose);
 				break;
 			}
 		}
 		
-		if (appendPrescription == true) {
-			// Append
-			
-		} else {
+		if (appendPrescription == false) {
 			PrescriptionItem newItem = new PrescriptionItem(pharmaceuticalName, duration, prescribedDailyDose, containerSize, overTheCounter, comments);
 			prescriptionItems.add(newItem);
-			
-			// Set number of containers variable
 		}
 	}
 	
