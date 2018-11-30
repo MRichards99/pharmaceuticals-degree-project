@@ -7,6 +7,7 @@ public class PrescriptionItem {
 	private int containerSize;
 	private int counterAvailability;
 	private String comments;
+	private int numberOfContainers;
 	
 	public PrescriptionItem(String pharmaceuticalName, int duration, int prescribedDailyDose, int containerSize,
 							int counterAvailability, String comments) {
@@ -79,6 +80,10 @@ public class PrescriptionItem {
 
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+	
+	public int getNumberOfContainers() {
+		return ( this.duration * this.getPrescribedDailyDose() ) / this.getContainerSize(); 
 	}
 
 }

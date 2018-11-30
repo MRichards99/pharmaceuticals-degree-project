@@ -259,6 +259,8 @@ public class PharmaceuticalForm extends JFrame {
 		pPanel.add(totalPrescriptionItemsField);
 		totalPrescriptionItemsField.setHorizontalAlignment(SwingConstants.LEFT);
 		totalPrescriptionItemsField.setColumns(10);
+
+		updateTotalPrescriptionItemsField();
 		
 		JPanel cPanel = new JPanel();
 		statusPanel.add(cPanel);
@@ -271,6 +273,8 @@ public class PharmaceuticalForm extends JFrame {
 		totalNumberOfContainersField = new JTextField();
 		cPanel.add(totalNumberOfContainersField);
 		totalNumberOfContainersField.setColumns(10);
+		
+		totalNumberOfContainersField.setText(String.valueOf(prescription.getNumberOfContainers()));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		tablePanel.add(scrollPane, BorderLayout.CENTER);
@@ -362,12 +366,21 @@ public class PharmaceuticalForm extends JFrame {
 			Object[] data = {prescriptionItems.get(i).getPharmaceuticalName(),
 							 prescriptionItems.get(i).getDuration(),
 							 prescriptionItems.get(i).getPrescribedDailyDose(),
-							 prescriptionItems.get(i).getContainerSize(),
+							 prescriptionItems.get(i).getNumberOfContainers(),
 							 prescriptionItems.get(i).isCounterAvailability(),
 							 prescriptionItems.get(i).getComments()
 			};
 			tableModel.addRow(data);
 		}
+		
+		updateTotalPrescriptionItemsField();
+		
 	}
+	
+	public void updateTotalPrescriptionItemsField() {
+		totalPrescriptionItemsField.setText(String.valueOf(prescription.getNumberOfPrescriptionItems()));
+	}
+	
+	
 }
 	
