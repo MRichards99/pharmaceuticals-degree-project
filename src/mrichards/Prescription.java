@@ -13,7 +13,7 @@ public class Prescription {
 		prescriptionItems = new ArrayList<>();
 	}
 
-	public void addPrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, int containerSize, int overTheCounter, String comments) {
+	public void addPrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, int containerSize, boolean overTheCounter, String comments) {
 		boolean appendPrescription = false;
 		
 		for(int i = 0; i < prescriptionItems.size(); i++) {

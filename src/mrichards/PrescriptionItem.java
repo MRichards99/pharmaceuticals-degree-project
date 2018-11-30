@@ -5,12 +5,12 @@ public class PrescriptionItem {
 	private int prescribedDailyDose;
 	private int duration;
 	private int containerSize;
-	private int counterAvailability;
+	private boolean counterAvailability;
 	private String comments;
 	private int numberOfContainers;
 	
 	public PrescriptionItem(String pharmaceuticalName, int duration, int prescribedDailyDose, 
-							int containerSize, int counterAvailability, String comments) {
+							int containerSize, boolean counterAvailability, String comments) {
 		this.pharmaceuticalName = pharmaceuticalName;
 		this.prescribedDailyDose = prescribedDailyDose;
 		this.duration = duration;
@@ -58,7 +58,7 @@ public class PrescriptionItem {
 		return containerSize;
 	}
 
-	public int isCounterAvailability() {
+	public boolean isCounterAvailability() {
 		return counterAvailability;
 	}
 
