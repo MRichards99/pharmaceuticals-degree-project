@@ -142,6 +142,7 @@ public class PharmaceuticalForm extends JFrame {
 		optionsPanel.add(durationLabel, gbc_durationLabel);
 		
 		JSpinner prescribedDailyDoseSelect = new JSpinner();
+		prescribedDailyDoseSelect.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		GridBagConstraints gbc_prescribedDailyDoseSelect = new GridBagConstraints();
 		gbc_prescribedDailyDoseSelect.fill = GridBagConstraints.BOTH;
 		gbc_prescribedDailyDoseSelect.insets = new Insets(0, 0, 5, 5);
@@ -155,15 +156,16 @@ public class PharmaceuticalForm extends JFrame {
 			pharmaceuticalNameComboBox.addItem(pharmaceuticalName);
 		}
 		
+		// No item will appear in drop down until selected by the user
+		pharmaceuticalNameComboBox.setSelectedIndex(-1);
+		
 		pharmaceuticalNameComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String selectedPharmaceutical = (String) pharmaceuticalNameComboBox.getSelectedItem(); 
+				String selectedPharmaceutical = (String) pharmaceuticalNameComboBox.getSelectedItem();
 				currentPharmaceutical = databaseConnection.getPharmaceutical(selectedPharmaceutical);
 				dailyDoseDisplay.setText(String.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
-				prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));				
-				
-				// See if it needs to be stored in the fridge or not
+				prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
 				pharmaceuticalDescriptionTextArea.setText(currentPharmaceutical.getDescription());
 			}
 		});
@@ -174,7 +176,8 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_pharmaceuticalNameComboBox.gridy = 1;
 		optionsPanel.add(pharmaceuticalNameComboBox, gbc_pharmaceuticalNameComboBox);
 		
-		dailyDoseDisplay = new JLabel("X");
+		dailyDoseDisplay = new JLabel("");
+		dailyDoseDisplay.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_dailyDoseDisplay = new GridBagConstraints();
 		gbc_dailyDoseDisplay.fill = GridBagConstraints.BOTH;
 		gbc_dailyDoseDisplay.insets = new Insets(0, 0, 5, 5);
@@ -318,8 +321,6 @@ public class PharmaceuticalForm extends JFrame {
 		// Centre align table headers
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		
-		
-
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.EAST);
 		buttonPanel.setLayout(new BorderLayout(0, 0));
@@ -376,13 +377,10 @@ public class PharmaceuticalForm extends JFrame {
 		}
 		
 		updateTotalPrescriptionItemsField();
-		
 	}
 	
 	public void updateTotalPrescriptionItemsField() {
 		totalPrescriptionItemsField.setText(String.valueOf(prescription.getNumberOfPrescriptionItems()));
 	}
-	
-	
 }
 	
