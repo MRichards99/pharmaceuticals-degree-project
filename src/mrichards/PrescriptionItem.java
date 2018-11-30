@@ -9,8 +9,8 @@ public class PrescriptionItem {
 	private String comments;
 	private int numberOfContainers;
 	
-	public PrescriptionItem(String pharmaceuticalName, int duration, int prescribedDailyDose, int containerSize,
-							int counterAvailability, String comments) {
+	public PrescriptionItem(String pharmaceuticalName, int duration, int prescribedDailyDose, 
+							int containerSize, int counterAvailability, String comments) {
 		this.pharmaceuticalName = pharmaceuticalName;
 		this.prescribedDailyDose = prescribedDailyDose;
 		this.duration = duration;
@@ -22,68 +22,56 @@ public class PrescriptionItem {
 	/*
 	 * Getters and setters
 	 */
-	
 	public String getPharmaceuticalName() {
 		return pharmaceuticalName;
 	}
 
-
 	public void setPharmaceuticalName(String pharmaceuticalName) {
-		this.pharmaceuticalName = pharmaceuticalName;
+		if (pharmaceuticalName.matches("[a-zA-Z0-9]+")) {
+			this.pharmaceuticalName = pharmaceuticalName;
+		}
 	}
-
 
 	public int getPrescribedDailyDose() {
 		return prescribedDailyDose;
 	}
 
-
 	public void setDailyDosage(int prescribedDailyDose) {
-		this.prescribedDailyDose = prescribedDailyDose;
+		// Dosage locked down on GUI controls so only a basic check to check data validity is needed
+		if (prescribedDailyDose > 0) {
+			this.prescribedDailyDose = prescribedDailyDose;
+		}
 	}
-
 
 	public int getDuration() {
 		return duration;
 	}
 
-
 	public void setDuration(int duration) {
-		this.duration = duration;
+		if (duration > 0) {
+			this.duration = duration;
+		}
 	}
 
-
+	// No setter as container size is never set - setting the value in the program would disturb data integrity
 	public int getContainerSize() {
 		return containerSize;
 	}
-
-
-	public void setContainerSize(int containerSize) {
-		this.containerSize = containerSize;
-	}
-
 
 	public int isCounterAvailability() {
 		return counterAvailability;
 	}
 
-
-	public void setCounterAvailability(int counterAvailability) {
-		this.counterAvailability = counterAvailability;
-	}
-
-
 	public String getComments() {
 		return comments;
 	}
 
-
 	public void setComments(String comments) {
+		// Lock this down to alphanumerics?
 		this.comments = comments;
 	}
 	
 	public int getNumberOfContainers() {
 		return ( this.duration * this.getPrescribedDailyDose() ) / this.getContainerSize(); 
 	}
-
 }
