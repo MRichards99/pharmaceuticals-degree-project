@@ -72,6 +72,7 @@ public class PrescriptionItem {
 	}
 	
 	public int getNumberOfContainers() {
-		return ( this.duration * this.getPrescribedDailyDose() ) / this.getContainerSize(); 
+		// Math.ceil always round up, will always need at least 1 container
+		return (int) Math.ceil(( this.duration * this.getPrescribedDailyDose() ) / (double) this.getContainerSize());
 	}
 }
