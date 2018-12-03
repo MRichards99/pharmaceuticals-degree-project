@@ -150,41 +150,6 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_prescribedDailyDoseSelect.gridy = 1;
 		optionsPanel.add(prescribedDailyDoseSelect, gbc_prescribedDailyDoseSelect);
 		
-		pharmaceuticalNameComboBox = new JComboBox();
-		Vector<String> pharmaceuticalNames = databaseConnection.getPharmaceuticalNames();
-		for(String pharmaceuticalName : pharmaceuticalNames) {
-			pharmaceuticalNameComboBox.addItem(pharmaceuticalName);
-		}
-		
-		// No item will appear in drop down until selected by the user
-		pharmaceuticalNameComboBox.setSelectedIndex(-1);
-		
-		pharmaceuticalNameComboBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String selectedPharmaceutical = (String) pharmaceuticalNameComboBox.getSelectedItem();
-				currentPharmaceutical = databaseConnection.getPharmaceutical(selectedPharmaceutical);
-				dailyDoseDisplay.setText(String.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
-				prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
-				pharmaceuticalDescriptionTextArea.setText(currentPharmaceutical.getDescription());
-			}
-		});
-		
-		GridBagConstraints gbc_pharmaceuticalNameComboBox = new GridBagConstraints();
-		gbc_pharmaceuticalNameComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_pharmaceuticalNameComboBox.gridx = 0;
-		gbc_pharmaceuticalNameComboBox.gridy = 1;
-		optionsPanel.add(pharmaceuticalNameComboBox, gbc_pharmaceuticalNameComboBox);
-		
-		dailyDoseDisplay = new JLabel("");
-		dailyDoseDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_dailyDoseDisplay = new GridBagConstraints();
-		gbc_dailyDoseDisplay.fill = GridBagConstraints.BOTH;
-		gbc_dailyDoseDisplay.insets = new Insets(0, 0, 5, 5);
-		gbc_dailyDoseDisplay.gridx = 1;
-		gbc_dailyDoseDisplay.gridy = 1;
-		optionsPanel.add(dailyDoseDisplay, gbc_dailyDoseDisplay);
-		
 		JSpinner durationSpinner = new JSpinner();
 		durationSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		GridBagConstraints gbc_durationSpinner = new GridBagConstraints();
@@ -194,15 +159,8 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_durationSpinner.gridy = 1;
 		optionsPanel.add(durationSpinner, gbc_durationSpinner);
 		
-		JCheckBox addCommentCheckBox = new JCheckBox("Add Comment?");
-		GridBagConstraints gbc_addCommentCheckBox = new GridBagConstraints();
-		gbc_addCommentCheckBox.fill = GridBagConstraints.BOTH;
-		gbc_addCommentCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_addCommentCheckBox.gridx = 5;
-		gbc_addCommentCheckBox.gridy = 1;
-		optionsPanel.add(addCommentCheckBox, gbc_addCommentCheckBox);
-		
 		JButton addButton = new JButton("Add");
+		addButton.setEnabled(false);
 		addButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
 		gbc_addButton.anchor = GridBagConstraints.WEST;
@@ -226,6 +184,52 @@ public class PharmaceuticalForm extends JFrame {
 				updateTable();
 			}
 		});
+		
+		pharmaceuticalNameComboBox = new JComboBox();
+		Vector<String> pharmaceuticalNames = databaseConnection.getPharmaceuticalNames();
+		for(String pharmaceuticalName : pharmaceuticalNames) {
+			pharmaceuticalNameComboBox.addItem(pharmaceuticalName);
+		}
+		
+		// No item will appear in drop down until selected by the user
+		pharmaceuticalNameComboBox.setSelectedIndex(-1);
+		
+		pharmaceuticalNameComboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String selectedPharmaceutical = (String) pharmaceuticalNameComboBox.getSelectedItem();
+				currentPharmaceutical = databaseConnection.getPharmaceutical(selectedPharmaceutical);
+				dailyDoseDisplay.setText(String.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
+				prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
+				pharmaceuticalDescriptionTextArea.setText(currentPharmaceutical.getDescription());
+
+				// Add button disabled until an item is selected
+				addButton.setEnabled(true);
+			}
+		});
+		
+		GridBagConstraints gbc_pharmaceuticalNameComboBox = new GridBagConstraints();
+		gbc_pharmaceuticalNameComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_pharmaceuticalNameComboBox.gridx = 0;
+		gbc_pharmaceuticalNameComboBox.gridy = 1;
+		optionsPanel.add(pharmaceuticalNameComboBox, gbc_pharmaceuticalNameComboBox);
+		
+		dailyDoseDisplay = new JLabel("");
+		dailyDoseDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_dailyDoseDisplay = new GridBagConstraints();
+		gbc_dailyDoseDisplay.fill = GridBagConstraints.BOTH;
+		gbc_dailyDoseDisplay.insets = new Insets(0, 0, 5, 5);
+		gbc_dailyDoseDisplay.gridx = 1;
+		gbc_dailyDoseDisplay.gridy = 1;
+		optionsPanel.add(dailyDoseDisplay, gbc_dailyDoseDisplay);
+		
+		JCheckBox addCommentCheckBox = new JCheckBox("Add Comment?");
+		GridBagConstraints gbc_addCommentCheckBox = new GridBagConstraints();
+		gbc_addCommentCheckBox.fill = GridBagConstraints.BOTH;
+		gbc_addCommentCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_addCommentCheckBox.gridx = 5;
+		gbc_addCommentCheckBox.gridy = 1;
+		optionsPanel.add(addCommentCheckBox, gbc_addCommentCheckBox);
 		
 		JLabel prescriptionLabel = new JLabel("Prescription Table:");
 		GridBagConstraints gbc_prescriptionLabel = new GridBagConstraints();
