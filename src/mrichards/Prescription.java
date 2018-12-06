@@ -16,6 +16,9 @@ public class Prescription {
 	public void addPrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, int containerSize, boolean overTheCounter, String comments) {
 		boolean appendPrescription = false;
 		
+		this.setNumberOfContainers(containerSize);
+		
+		
 		for(int i = 0; i < prescriptionItems.size(); i++) {
 			String search = prescriptionItems.get(i).getPharmaceuticalName();
 			if (pharmaceuticalName.equals(search)) {
@@ -85,7 +88,7 @@ public class Prescription {
 		return numberOfContainers;
 	}
 
-	public void setNumberOfContainers(int numberOfContainers) {
-		this.numberOfContainers = numberOfContainers;
+	public void setNumberOfContainers(int containerNumberValue) {
+			numberOfContainers += containerNumberValue;
 	}
 }

@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -34,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.ScrollPaneConstants;
 
 public class PharmaceuticalForm extends JFrame {
 
@@ -141,24 +144,6 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_durationLabel.gridy = 0;
 		optionsPanel.add(durationLabel, gbc_durationLabel);
 		
-		JSpinner prescribedDailyDoseSelect = new JSpinner();
-		prescribedDailyDoseSelect.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		GridBagConstraints gbc_prescribedDailyDoseSelect = new GridBagConstraints();
-		gbc_prescribedDailyDoseSelect.fill = GridBagConstraints.BOTH;
-		gbc_prescribedDailyDoseSelect.insets = new Insets(0, 0, 5, 5);
-		gbc_prescribedDailyDoseSelect.gridx = 2;
-		gbc_prescribedDailyDoseSelect.gridy = 1;
-		optionsPanel.add(prescribedDailyDoseSelect, gbc_prescribedDailyDoseSelect);
-		
-		JSpinner durationSpinner = new JSpinner();
-		durationSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-		GridBagConstraints gbc_durationSpinner = new GridBagConstraints();
-		gbc_durationSpinner.fill = GridBagConstraints.BOTH;
-		gbc_durationSpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_durationSpinner.gridx = 4;
-		gbc_durationSpinner.gridy = 1;
-		optionsPanel.add(durationSpinner, gbc_durationSpinner);
-		
 		JButton addButton = new JButton("Add");
 		addButton.setEnabled(false);
 		addButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -170,13 +155,43 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_addButton.gridy = 1;
 		optionsPanel.add(addButton, gbc_addButton);
 		
+		JSpinner prescribedDailyDoseSelect = new JSpinner();
+		SpinnerNumberModel dailyDoseModel = new SpinnerNumberModel(new Integer(0), new Integer(0), new Integer(1), new Integer(1));
+		
+		prescribedDailyDoseSelect.setModel(dailyDoseModel);
+		GridBagConstraints gbc_prescribedDailyDoseSelect = new GridBagConstraints();
+		gbc_prescribedDailyDoseSelect.fill = GridBagConstraints.BOTH;
+		gbc_prescribedDailyDoseSelect.insets = new Insets(0, 0, 5, 5);
+		gbc_prescribedDailyDoseSelect.gridx = 2;
+		gbc_prescribedDailyDoseSelect.gridy = 1;
+		optionsPanel.add(prescribedDailyDoseSelect, gbc_prescribedDailyDoseSelect);
+		
+		prescribedDailyDoseSelect.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
+					addButton.setEnabled(false);
+				}
+			}
+			
+		});
+		
+		JSpinner durationSpinner = new JSpinner();
+		durationSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		GridBagConstraints gbc_durationSpinner = new GridBagConstraints();
+		gbc_durationSpinner.fill = GridBagConstraints.BOTH;
+		gbc_durationSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_durationSpinner.gridx = 4;
+		gbc_durationSpinner.gridy = 1;
+		optionsPanel.add(durationSpinner, gbc_durationSpinner);
+		
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Insert pharmaceutical selected by user into prescription
 				
 				prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
-												 (Integer) prescribedDailyDoseSelect.getValue(),
+												 (int) prescribedDailyDoseSelect.getValue(),
 												 (Integer) durationSpinner.getValue(),
 												 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
 												 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
@@ -205,6 +220,8 @@ public class PharmaceuticalForm extends JFrame {
 
 				// Add button disabled until an item is selected
 				addButton.setEnabled(true);
+				
+				dailyDoseModel.setMaximum(currentPharmaceutical.getRecommendedDailyDose() * 2);
 			}
 		});
 		
@@ -265,6 +282,7 @@ public class PharmaceuticalForm extends JFrame {
 		totalPrescriptionItemsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		totalPrescriptionItemsField = new JTextField();
+		totalPrescriptionItemsField.setEditable(false);
 		pPanel.add(totalPrescriptionItemsField);
 		totalPrescriptionItemsField.setHorizontalAlignment(SwingConstants.LEFT);
 		totalPrescriptionItemsField.setColumns(10);
@@ -280,12 +298,14 @@ public class PharmaceuticalForm extends JFrame {
 		cPanel.add(totalNumberOfContainersLabel);
 		
 		totalNumberOfContainersField = new JTextField();
+		totalNumberOfContainersField.setEditable(false);
 		cPanel.add(totalNumberOfContainersField);
 		totalNumberOfContainersField.setColumns(10);
 		
-		totalNumberOfContainersField.setText(String.valueOf(prescription.getNumberOfContainers()));
+		//totalNumberOfContainersField.setText(String.valueOf(prescription.getNumberOfContainers()));
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		tablePanel.add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
@@ -378,9 +398,13 @@ public class PharmaceuticalForm extends JFrame {
 							 prescriptionItems.get(i).getComments()
 			};
 			tableModel.addRow(data);
+			prescription.setNumberOfContainers(prescriptionItems.get(i).getNumberOfContainers());
 		}
 		
 		updateTotalPrescriptionItemsField();
+
+		totalNumberOfContainersField.setText(String.valueOf(prescription.getNumberOfContainers()));
+		
 	}
 	
 	public void updateTotalPrescriptionItemsField() {
