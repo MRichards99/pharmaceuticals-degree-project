@@ -10,6 +10,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -157,6 +158,7 @@ public class PharmaceuticalForm extends JFrame {
 		
 		JSpinner prescribedDailyDoseSelect = new JSpinner();
 		SpinnerNumberModel dailyDoseModel = new SpinnerNumberModel(new Integer(0), new Integer(0), new Integer(1), new Integer(1));
+		prescribedDailyDoseSelect.setEnabled(false);
 		
 		prescribedDailyDoseSelect.setModel(dailyDoseModel);
 		GridBagConstraints gbc_prescribedDailyDoseSelect = new GridBagConstraints();
@@ -173,7 +175,6 @@ public class PharmaceuticalForm extends JFrame {
 					addButton.setEnabled(false);
 				}
 			}
-			
 		});
 		
 		JSpinner durationSpinner = new JSpinner();
@@ -185,18 +186,58 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_durationSpinner.gridy = 1;
 		optionsPanel.add(durationSpinner, gbc_durationSpinner);
 		
+		JCheckBox addCommentCheckBox = new JCheckBox("Add Comment?");
+		GridBagConstraints gbc_addCommentCheckBox = new GridBagConstraints();
+		gbc_addCommentCheckBox.fill = GridBagConstraints.BOTH;
+		gbc_addCommentCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_addCommentCheckBox.gridx = 5;
+		gbc_addCommentCheckBox.gridy = 1;
+		optionsPanel.add(addCommentCheckBox, gbc_addCommentCheckBox);
+		
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// Insert pharmaceutical selected by user into prescription
+				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
+					if (pharmaceuticalDescriptionTextArea.getText().equals(currentPharmaceutical.getDescription()) && addCommentCheckBox.isSelected()) {
+						JOptionPane.showMessageDialog(new JFrame(),"You must edit the comments as the dose is above the recommended amount.");
+					}
+				}
+				String pharmaceuticalComments = currentPharmaceutical.getDescription();
+				if (addCommentCheckBox.isSelected()) {
+					// User wishes for comments to be put into prescription table
+					pharmaceuticalComments = pharmaceuticalDescriptionTextArea.getText();	
+				}
 				
-				prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
-												 (int) prescribedDailyDoseSelect.getValue(),
-												 (Integer) durationSpinner.getValue(),
-												 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
-												 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
-												 pharmaceuticalDescriptionTextArea.getText());
-				updateTable();
+					// Insert pharmaceutical selected by user into prescription
+					prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
+													 (int) prescribedDailyDoseSelect.getValue(),
+													 (Integer) durationSpinner.getValue(),
+													 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
+													 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
+													 pharmaceuticalComments);
+					updateTable();
+			}
+		});
+		
+		JCheckBox exceedDailyDoseCheckBox = new JCheckBox("OK to Exceed Daily Dose?");
+		GridBagConstraints gbc_exceedDailyDoseCheckBox = new GridBagConstraints();
+		gbc_exceedDailyDoseCheckBox.fill = GridBagConstraints.BOTH;
+		gbc_exceedDailyDoseCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_exceedDailyDoseCheckBox.gridx = 2;
+		gbc_exceedDailyDoseCheckBox.gridy = 2;
+		optionsPanel.add(exceedDailyDoseCheckBox, gbc_exceedDailyDoseCheckBox);
+		exceedDailyDoseCheckBox.setEnabled(false);
+		
+		exceedDailyDoseCheckBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
+					if (exceedDailyDoseCheckBox.isSelected()) {
+						addButton.setEnabled(true);
+					} else {
+						addButton.setEnabled(false);
+					}
+				}
 			}
 		});
 		
@@ -218,8 +259,10 @@ public class PharmaceuticalForm extends JFrame {
 				prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
 				pharmaceuticalDescriptionTextArea.setText(currentPharmaceutical.getDescription());
 
-				// Add button disabled until an item is selected
+				// Some GUI components disabled until an item is selected
 				addButton.setEnabled(true);
+				exceedDailyDoseCheckBox.setEnabled(true);
+				prescribedDailyDoseSelect.setEnabled(true);
 				
 				dailyDoseModel.setMaximum(currentPharmaceutical.getRecommendedDailyDose() * 2);
 			}
@@ -240,14 +283,6 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_dailyDoseDisplay.gridy = 1;
 		optionsPanel.add(dailyDoseDisplay, gbc_dailyDoseDisplay);
 		
-		JCheckBox addCommentCheckBox = new JCheckBox("Add Comment?");
-		GridBagConstraints gbc_addCommentCheckBox = new GridBagConstraints();
-		gbc_addCommentCheckBox.fill = GridBagConstraints.BOTH;
-		gbc_addCommentCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_addCommentCheckBox.gridx = 5;
-		gbc_addCommentCheckBox.gridy = 1;
-		optionsPanel.add(addCommentCheckBox, gbc_addCommentCheckBox);
-		
 		JLabel prescriptionLabel = new JLabel("Prescription Table:");
 		GridBagConstraints gbc_prescriptionLabel = new GridBagConstraints();
 		gbc_prescriptionLabel.fill = GridBagConstraints.BOTH;
@@ -255,14 +290,6 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_prescriptionLabel.gridx = 0;
 		gbc_prescriptionLabel.gridy = 2;
 		optionsPanel.add(prescriptionLabel, gbc_prescriptionLabel);
-		
-		JCheckBox exceedDailyDoseCheckBox = new JCheckBox("OK to Exceed Daily Dose?");
-		GridBagConstraints gbc_exceedDailyDoseCheckBox = new GridBagConstraints();
-		gbc_exceedDailyDoseCheckBox.fill = GridBagConstraints.BOTH;
-		gbc_exceedDailyDoseCheckBox.insets = new Insets(0, 0, 0, 5);
-		gbc_exceedDailyDoseCheckBox.gridx = 2;
-		gbc_exceedDailyDoseCheckBox.gridy = 2;
-		optionsPanel.add(exceedDailyDoseCheckBox, gbc_exceedDailyDoseCheckBox);
 		
 		JPanel tablePanel = new JPanel();
 		contentPane.add(tablePanel, BorderLayout.CENTER);
