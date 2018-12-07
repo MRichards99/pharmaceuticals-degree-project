@@ -425,13 +425,10 @@ public class PharmaceuticalForm extends JFrame {
 							 prescriptionItems.get(i).getComments()
 			};
 			tableModel.addRow(data);
-			prescription.setNumberOfContainers(prescriptionItems.get(i).getNumberOfContainers());
 		}
 		
 		updateTotalPrescriptionItemsField();
-
 		totalNumberOfContainersField.setText(String.valueOf(prescription.getNumberOfContainers()));
-		
 	}
 	
 	public void updateTotalPrescriptionItemsField() {

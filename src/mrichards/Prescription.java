@@ -15,10 +15,7 @@ public class Prescription {
 
 	public void addPrescriptionItem(String pharmaceuticalName, int prescribedDailyDose, int duration, int containerSize, boolean overTheCounter, String comments) {
 		boolean appendPrescription = false;
-		
-		this.setNumberOfContainers(containerSize);
-		
-		
+
 		for(int i = 0; i < prescriptionItems.size(); i++) {
 			String search = prescriptionItems.get(i).getPharmaceuticalName();
 			if (pharmaceuticalName.equals(search)) {
@@ -45,6 +42,7 @@ public class Prescription {
 			PrescriptionItem newItem = new PrescriptionItem(pharmaceuticalName, duration, prescribedDailyDose, containerSize, overTheCounter, comments);
 			prescriptionItems.add(newItem);
 		}
+		this.setNumberOfContainers();
 	}
 	
 	public void removePrescriptionItem(String pharmaceuticalName) {
@@ -54,12 +52,14 @@ public class Prescription {
 				prescriptionItems.remove(i);
 			}
 		}
+		this.setNumberOfContainers();
 	}
 	
 	public void clearPrescription() {
 		// Using clear() instead of removeAll() due to decreased time complexity
 		// clear() is O(n) whereas removeAll() is O(n^2)
 		prescriptionItems.clear();
+		this.setNumberOfContainers();
 	}
 	
 	public int getNumberOfPrescriptionItems() {
@@ -93,7 +93,11 @@ public class Prescription {
 		return numberOfContainers;
 	}
 
-	public void setNumberOfContainers(int containerNumberValue) {
-			numberOfContainers += containerNumberValue;
+	private void setNumberOfContainers() {
+		numberOfContainers = 0;
+		for (int i = 0; i < prescriptionItems.size(); i++) {
+			numberOfContainers += prescriptionItems.get(i).getNumberOfContainers();
+		}
+		
 	}
 }
