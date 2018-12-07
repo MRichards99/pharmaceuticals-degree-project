@@ -197,26 +197,32 @@ public class PharmaceuticalForm extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				boolean addPharmaceutical = true;
 				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
-					if (pharmaceuticalDescriptionTextArea.getText().equals(currentPharmaceutical.getDescription()) && addCommentCheckBox.isSelected()) {
+					if (pharmaceuticalDescriptionTextArea.getText().equals(currentPharmaceutical.getDescription()) || ! addCommentCheckBox.isSelected()) {
 						JOptionPane.showMessageDialog(new JFrame(),"You must edit the comments as the dose is above the recommended amount.");
+						addPharmaceutical = false;
 					}
 				}
-				String pharmaceuticalComments = currentPharmaceutical.getDescription();
-				if (addCommentCheckBox.isSelected()) {
-					// User wishes for comments to be put into prescription table
-					pharmaceuticalComments = pharmaceuticalDescriptionTextArea.getText();	
-				}
 				
-					// Insert pharmaceutical selected by user into prescription
-					prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
-													 (int) prescribedDailyDoseSelect.getValue(),
-													 (Integer) durationSpinner.getValue(),
-													 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
-													 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
-													 pharmaceuticalComments);
-					updateTable();
+				if (addPharmaceutical) { 
+					String pharmaceuticalComments = currentPharmaceutical.getDescription();
+					if (addCommentCheckBox.isSelected()) {
+						// User wishes for comments to be put into prescription table
+						pharmaceuticalComments = pharmaceuticalDescriptionTextArea.getText();	
+					}
+					
+						// Insert pharmaceutical selected by user into prescription
+						prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
+														 (int) prescribedDailyDoseSelect.getValue(),
+														 (Integer) durationSpinner.getValue(),
+														 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
+														 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
+														 pharmaceuticalComments);
+						updateTable();
+				}
 			}
+				
 		});
 		
 		JCheckBox exceedDailyDoseCheckBox = new JCheckBox("OK to Exceed Daily Dose?");
