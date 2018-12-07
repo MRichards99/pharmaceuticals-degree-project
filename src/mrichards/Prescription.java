@@ -29,6 +29,11 @@ public class Prescription {
 				int newDuration = existingDuration + duration;
 				prescriptionItems.get(i).setDuration(newDuration);
 				
+				// Check if comments have changed
+				if (! comments.equals(prescriptionItems.get(i).getComments())) {
+					prescriptionItems.get(i).setComments(comments);
+				}
+				
 				// Set dose to whichever figure is higher
 				if (prescribedDailyDose > prescriptionItems.get(i).getPrescribedDailyDose())
 					prescriptionItems.get(i).setDailyDosage(prescribedDailyDose);
