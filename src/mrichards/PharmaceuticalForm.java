@@ -211,7 +211,7 @@ public class PharmaceuticalForm extends JFrame {
 						// User wishes for comments to be put into prescription table
 						pharmaceuticalComments = pharmaceuticalDescriptionTextArea.getText();	
 					}
-					
+
 						// Insert pharmaceutical selected by user into prescription
 						prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
 														 (int) prescribedDailyDoseSelect.getValue(),
@@ -221,8 +221,7 @@ public class PharmaceuticalForm extends JFrame {
 														 pharmaceuticalComments);
 						updateTable();
 				}
-			}
-				
+			}	
 		});
 		
 		JCheckBox exceedDailyDoseCheckBox = new JCheckBox("OK to Exceed Daily Dose?");
@@ -238,11 +237,7 @@ public class PharmaceuticalForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
-					if (exceedDailyDoseCheckBox.isSelected()) {
-						addButton.setEnabled(true);
-					} else {
-						addButton.setEnabled(false);
-					}
+					addButton.setEnabled(exceedDailyDoseCheckBox.isSelected());
 				}
 			}
 		});
