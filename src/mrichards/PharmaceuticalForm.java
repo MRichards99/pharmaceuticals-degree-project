@@ -128,6 +128,7 @@ public class PharmaceuticalForm extends JFrame {
 		optionsPanel.add(descriptionSpecialDetailsLabel, gbc_descriptionSpecialDetailsLabel);
 		
 		JTextArea pharmaceuticalDescriptionTextArea = new JTextArea();
+		pharmaceuticalDescriptionTextArea.setWrapStyleWord(true);
 		pharmaceuticalDescriptionTextArea.setLineWrap(true);
 		GridBagConstraints gbc_pharmaceuticalDescriptionTextArea = new GridBagConstraints();
 		gbc_pharmaceuticalDescriptionTextArea.gridheight = 2;
@@ -205,21 +206,27 @@ public class PharmaceuticalForm extends JFrame {
 					}
 				}
 				
-				if (addPharmaceutical) { 
-					String pharmaceuticalComments = currentPharmaceutical.getDescription();
-					if (addCommentCheckBox.isSelected()) {
-						// User wishes for comments to be put into prescription table
-						pharmaceuticalComments = pharmaceuticalDescriptionTextArea.getText();	
-					}
+				if (addPharmaceutical) {
+					String pharmaceuticalDescription = pharmaceuticalDescriptionTextArea.getText();
+					
+					// Checking if end of comments is correctly formatted
+					if (! pharmaceuticalDescriptionTextArea.getText().equals(currentPharmaceutical.getDescription())) {
+						int textAreaLength = pharmaceuticalDescription.length();
+						String finalSection = pharmaceuticalDescription.substring(textAreaLength - 3, textAreaLength);
+						
+						if (! finalSection.equals(";\n")) {
+							pharmaceuticalDescription += ";\n";
+						}
 
-						// Insert pharmaceutical selected by user into prescription
-						prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
-														 (int) prescribedDailyDoseSelect.getValue(),
-														 (Integer) durationSpinner.getValue(),
-														 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
-														 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
-														 pharmaceuticalComments);
-						updateTable();
+					}
+					// Insert pharmaceutical selected by user into prescription
+					prescription.addPrescriptionItem(currentPharmaceutical.getPharmaceuticalName(), 
+													 (int) prescribedDailyDoseSelect.getValue(),
+													 (Integer) durationSpinner.getValue(),
+													 currentPharmaceutical.getSpecialRequirementID().getContainerSize(),
+													 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
+													 pharmaceuticalDescription);
+					updateTable();
 				}
 			}	
 		});
@@ -258,7 +265,7 @@ public class PharmaceuticalForm extends JFrame {
 				currentPharmaceutical = databaseConnection.getPharmaceutical(selectedPharmaceutical);
 				dailyDoseDisplay.setText(String.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
 				prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
-				pharmaceuticalDescriptionTextArea.setText(currentPharmaceutical.getDescription());
+				pharmaceuticalDescriptionTextArea.setText(currentPharmaceutical.getDisplayComments());
 
 				// Some GUI components disabled until an item is selected
 				addButton.setEnabled(true);
@@ -433,7 +440,7 @@ public class PharmaceuticalForm extends JFrame {
 	}
 	
 	public void updateTotalPrescriptionItemsField() {
-		totalPrescriptionItemsField.setText(String.valueOf(prescription.getNumberOfPrescriptionItems()));
+		totalPrescriptionItemsField.setText(String.valueOf(prescription.getNumberOfPharmaceuticals()));
 	}
 }
 	

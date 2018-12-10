@@ -17,19 +17,53 @@ public class Pharmaceutical {
 	public Pharmaceutical(int pharmaceuticalID, SpecialRequirements specialRequirementID, String pharmaceuticalName,
 			String description, char medicationType, int recommendedDailyDose) {
 		super();
-		this.pharmaceuticalID = pharmaceuticalID;
-		this.specialRequirementID = specialRequirementID;
-		this.pharmaceuticalName = pharmaceuticalName;
-		this.description = description;
-		this.medicationType = medicationType;
-		this.recommendedDailyDose = recommendedDailyDose;
+		setPharmaceuticalID(pharmaceuticalID);
+		setSpecialRequirementID(specialRequirementID);
+		setPharmaceuticalName(pharmaceuticalName);
+		setDescription(description);
+		setMedicationType(medicationType);
+		setRecommendedDailyDose(recommendedDailyDose);
 	}
 	
-	public int getPharmaceuticalID() {
-		return pharmaceuticalID;
+	public String getDisplayComments() {
+		// Description
+		String displayComments = "";
+		displayComments = this.getDescription() + "; ";
+		
+		// Pharmaceutical available over the counter
+		if (this.getSpecialRequirementID().isAvailableOverTheCounter()) {
+			displayComments += "Available over the counter and maybe cheaper; ";
+		}
+		
+		// Amount and type of pharmaceutical
+		switch (this.getSpecialRequirementID().getContainerType()) {
+			case "Bottle":
+				displayComments += "Comes in a " + this.getSpecialRequirementID().getContainerSize() + "ml bottle; ";
+				break;
+			case "Box":
+				displayComments += "Comes in a box of " + this.getSpecialRequirementID().getContainerSize() + " tablets; ";
+				break;
+			case "Tube":
+				displayComments += "Comes in a " + this.getSpecialRequirementID().getContainerSize() + "ml cream; ";
+				break;
+			case "Phial":
+				displayComments += "Comes in a " + this.getSpecialRequirementID().getContainerSize() + "ml phial; ";
+				break;
+		}
+		
+		// Whether pharmaceutical requires fridge storage
+		if (this.getSpecialRequirementID().isStoreInFridge() == 1) {
+			displayComments += "MUST BE STORED IN FRIDGE; ";
+		}
+		
+		return displayComments;
 	}
 	
-	public void setPharmaceuticalID(int pharmaceuticalID) {
+	/*
+	 * Getters and setters
+	 */
+	
+	private void setPharmaceuticalID(int pharmaceuticalID) {
 		this.pharmaceuticalID = pharmaceuticalID;
 	}
 	
@@ -37,7 +71,7 @@ public class Pharmaceutical {
 		return specialRequirementID;
 	}
 	
-	public void setSpecialRequirementID(SpecialRequirements specialRequirementID) {
+	private void setSpecialRequirementID(SpecialRequirements specialRequirementID) {
 		this.specialRequirementID = specialRequirementID;
 	}
 	
@@ -45,7 +79,7 @@ public class Pharmaceutical {
 		return pharmaceuticalName;
 	}
 	
-	public void setPharmaceuticalName(String pharmaceuticalName) {
+	private void setPharmaceuticalName(String pharmaceuticalName) {
 		this.pharmaceuticalName = pharmaceuticalName;
 	}
 	
@@ -53,7 +87,7 @@ public class Pharmaceutical {
 		return description;
 	}
 	
-	public void setDescription(String description) {
+	private void setDescription(String description) {
 		this.description = description;
 	}
 	
@@ -61,7 +95,7 @@ public class Pharmaceutical {
 		return medicationType;
 	}
 	
-	public void setMedicationType(char medicationType) {
+	private void setMedicationType(char medicationType) {
 		this.medicationType = medicationType;
 	}
 	
@@ -69,7 +103,7 @@ public class Pharmaceutical {
 		return recommendedDailyDose;
 	}
 	
-	public void setRecommendedDailyDose(int recommendedDailyDose) {
+	private void setRecommendedDailyDose(int recommendedDailyDose) {
 		this.recommendedDailyDose = recommendedDailyDose;
 	}
 }

@@ -7,26 +7,26 @@ public class PrescriptionItem {
 	private int containerSize;
 	private boolean counterAvailability;
 	private String comments;
-	private int numberOfContainers;
 	
 	public PrescriptionItem(String pharmaceuticalName, int duration, int prescribedDailyDose, 
 							int containerSize, boolean counterAvailability, String comments) {
-		this.pharmaceuticalName = pharmaceuticalName;
-		this.prescribedDailyDose = prescribedDailyDose;
-		this.duration = duration;
-		this.containerSize = containerSize;
-		this.counterAvailability = counterAvailability;
-		this.comments = comments;
+		setPharmaceuticalName(pharmaceuticalName);
+		setPrescribedDailyDose(prescribedDailyDose);
+		setDuration(duration);
+		setContainerSize(containerSize);
+		setCounterAvailability(counterAvailability);
+		setComments(comments);
 	}
 
 	/*
 	 * Getters and setters
 	 */
+	
 	public String getPharmaceuticalName() {
 		return pharmaceuticalName;
 	}
 
-	public void setPharmaceuticalName(String pharmaceuticalName) {
+	private void setPharmaceuticalName(String pharmaceuticalName) {
 		if (pharmaceuticalName.matches("[a-zA-Z0-9]+")) {
 			this.pharmaceuticalName = pharmaceuticalName;
 		}
@@ -34,6 +34,10 @@ public class PrescriptionItem {
 
 	public int getPrescribedDailyDose() {
 		return prescribedDailyDose;
+	}
+	
+	private void setPrescribedDailyDose(int prescribedDailyDose) {
+		this.prescribedDailyDose = prescribedDailyDose;
 	}
 
 	public void setDailyDosage(int prescribedDailyDose) {
@@ -48,26 +52,35 @@ public class PrescriptionItem {
 	}
 
 	public void setDuration(int duration) {
+		// Ensures duration matches a value realistic to the real world
 		if (duration > 0) {
 			this.duration = duration;
 		}
 	}
 
-	// No setter as container size is never set - setting the value in the program would disturb data integrity
 	public int getContainerSize() {
 		return containerSize;
 	}
 
+	private void setContainerSize(int containerSize) {
+		this.containerSize = containerSize;
+	}
+	
 	public boolean isCounterAvailability() {
 		return counterAvailability;
+	}
+	
+	private void setCounterAvailability(boolean counterAvailability) {
+		this.counterAvailability = counterAvailability;
 	}
 
 	public String getComments() {
 		return comments;
 	}
 
+	// Comments set in Prescription class, therefore a public method
 	public void setComments(String comments) {
-		// Lock this down to alphanumerics?
+		// Not locked down to alphanumerics due to use of semi colons
 		this.comments = comments;
 	}
 	

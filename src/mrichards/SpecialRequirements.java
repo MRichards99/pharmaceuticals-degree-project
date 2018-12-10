@@ -4,23 +4,27 @@ public class SpecialRequirements {
 	private int specialRequirementID;
 	private int containerSize;
 	private String containerType;
-	private Integer storeInFridge;
+	private int storeInFridge;
 	private boolean availableOverTheCounter;
+	
+	public SpecialRequirements() {
+		
+	}
 	
 	public SpecialRequirements(int specialRequirementID, int containerSize, String containerType, Integer storeInFridge, boolean availableOverTheCounter) {
 		super();
-		this.specialRequirementID = specialRequirementID;
-		this.containerSize = containerSize;
-		this.containerType = containerType;
-		this.storeInFridge = storeInFridge;
-		this.availableOverTheCounter = availableOverTheCounter;
+		setSpecialRequirementID(specialRequirementID);
+		setContainerSize(containerSize);
+		setContainerType(containerType);
+		setStoreInFridge(storeInFridge);
+		setAvailableOverTheCounter(availableOverTheCounter);
 	}
 	
 	public int getSpecialRequirementID() {
 		return specialRequirementID;
 	}
 	
-	public void setSpecialRequirementID(int specialRequirementID) {
+	private void setSpecialRequirementID(int specialRequirementID) {
 		this.specialRequirementID = specialRequirementID;
 	}
 	
@@ -28,7 +32,7 @@ public class SpecialRequirements {
 		return containerSize;
 	}
 	
-	public void setContainerSize(int containerSize) {
+	private void setContainerSize(int containerSize) {
 		this.containerSize = containerSize;
 	}
 	
@@ -36,7 +40,7 @@ public class SpecialRequirements {
 		return containerType;
 	}
 	
-	public void setContainerType(String containerType) {
+	private void setContainerType(String containerType) {
 		this.containerType = containerType;
 	}
 	
@@ -44,19 +48,19 @@ public class SpecialRequirements {
 		return storeInFridge;
 	}
 	
-	public int setStoreInFridge(Integer storeInFridge) {
-		this.storeInFridge = storeInFridge;
-		if (storeInFridge != null)
-			return storeInFridge.intValue();
-		else
-			return -1;
+	private void setStoreInFridge(Integer storeInFridge) {
+		if (storeInFridge != null) {
+			this.storeInFridge = storeInFridge;
+		} else {
+			this.storeInFridge = -1;
+		}
 	}
 	
 	public boolean isAvailableOverTheCounter() {
 		return availableOverTheCounter;
 	}
 	
-	public void setAvailableOverTheCounter(boolean availableOverTheCounter) {
+	private void setAvailableOverTheCounter(boolean availableOverTheCounter) {
 		this.availableOverTheCounter = availableOverTheCounter;
 	}
 }

@@ -6,8 +6,6 @@ public class Prescription {
 	private ArrayList<PrescriptionItem> prescriptionItems;
 	private int numberOfPharmaceuticals;
 	private int numberOfContainers;
-	
-	
 
 	public Prescription() {
 		prescriptionItems = new ArrayList<>();
@@ -42,7 +40,8 @@ public class Prescription {
 			PrescriptionItem newItem = new PrescriptionItem(pharmaceuticalName, duration, prescribedDailyDose, containerSize, overTheCounter, comments);
 			prescriptionItems.add(newItem);
 		}
-		this.setNumberOfContainers();
+		setNumberOfContainers();
+		setNumberOfPharmaceuticals();
 	}
 	
 	public void removePrescriptionItem(String pharmaceuticalName) {
@@ -52,41 +51,32 @@ public class Prescription {
 				prescriptionItems.remove(i);
 			}
 		}
-		this.setNumberOfContainers();
+		setNumberOfContainers();
+		setNumberOfPharmaceuticals();
 	}
 	
 	public void clearPrescription() {
 		// Using clear() instead of removeAll() due to decreased time complexity
 		// clear() is O(n) whereas removeAll() is O(n^2)
 		prescriptionItems.clear();
-		this.setNumberOfContainers();
+		setNumberOfContainers();
+		setNumberOfPharmaceuticals();
 	}
-	
-	public int getNumberOfPrescriptionItems() {
-		return prescriptionItems.size();
-	}
-	
 
 	/*
 	 * Getters and setters
-	 * Is each getter and setter needed? Consider this at the end
-	 * Any set clauses to be set private?
 	 */
 	
 	public ArrayList<PrescriptionItem> getPrescriptionItems() {
 		return prescriptionItems;
 	}
 
-	public void setPrescriptionItems(ArrayList<PrescriptionItem> prescriptionItems) {
-		this.prescriptionItems = prescriptionItems;
-	}
-
 	public int getNumberOfPharmaceuticals() {
 		return numberOfPharmaceuticals;
 	}
 
-	public void setNumberOfPharmaceuticals(int numberOfPharmaceuticals) {
-		this.numberOfPharmaceuticals = numberOfPharmaceuticals;
+	private void setNumberOfPharmaceuticals() {
+		numberOfPharmaceuticals = prescriptionItems.size();
 	}
 
 	public int getNumberOfContainers() {
