@@ -378,6 +378,11 @@ public class PharmaceuticalForm extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
 				if (SwingUtilities.isRightMouseButton(me)) {
+					int row = table.rowAtPoint(me.getPoint());
+					int column = table.columnAtPoint(me.getPoint());
+					if(! table.isRowSelected(row)) {
+						table.changeSelection(row, column, false, false);
+					}
 					tablePopupMenu.show(me.getComponent(), me.getX(), me.getY());
 				}
 			}
