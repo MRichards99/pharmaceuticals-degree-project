@@ -10,6 +10,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Dimension;
@@ -18,6 +19,7 @@ import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.Component;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JCheckBox;
@@ -38,6 +40,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JPopupMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PharmaceuticalForm extends JFrame {
 
@@ -350,11 +355,40 @@ public class PharmaceuticalForm extends JFrame {
 			}
 		);
 		
+		JPopupMenu tablePopupMenu = new JPopupMenu();
+		
+		// Creating and adding menu items with action listeners
+		JMenuItem editComments = new JMenuItem("Edit Comments");
+		editComments.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		tablePopupMenu.add(editComments);
+		
+		JMenuItem decrementDose = new JMenuItem("Decrement Dose");
+		decrementDose.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent me) {
+				if (SwingUtilities.isRightMouseButton(me)) {
+					tablePopupMenu.show(me.getComponent(), me.getX(), me.getY());
+				}
+			}
+		});
+		
+		tablePopupMenu.add(decrementDose);
+		addPopup(scrollPane, tablePopupMenu);
 		table.setModel(tableModel);
 		scrollPane.setViewportView(table);
 		
-		// Aligning table columns
-		// Right alignment
+		// Aligning table columns - right alignment
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 		rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
 		
@@ -377,6 +411,8 @@ public class PharmaceuticalForm extends JFrame {
 		
 		// Centre align table headers
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		
+		//table.
 		
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.EAST);
@@ -439,6 +475,23 @@ public class PharmaceuticalForm extends JFrame {
 	
 	public void updateTotalPrescriptionItemsField() {
 		totalPrescriptionItemsField.setText(String.valueOf(prescription.getNumberOfPharmaceuticals()));
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }
 	
