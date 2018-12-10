@@ -62,7 +62,9 @@ public class Pharmaceutical {
 	/*
 	 * Getters and setters
 	 */
-	
+	private int getPharmaceuticalID() {
+		return pharmaceuticalID;
+	}
 	private void setPharmaceuticalID(int pharmaceuticalID) {
 		this.pharmaceuticalID = pharmaceuticalID;
 	}

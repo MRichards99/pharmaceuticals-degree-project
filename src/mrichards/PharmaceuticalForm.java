@@ -200,7 +200,7 @@ public class PharmaceuticalForm extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean addPharmaceutical = true;
 				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
-					if (pharmaceuticalDescriptionTextArea.getText().equals(currentPharmaceutical.getDescription()) || ! addCommentCheckBox.isSelected()) {
+					if (pharmaceuticalDescriptionTextArea.getText().equals(currentPharmaceutical.getDisplayComments()) || ! addCommentCheckBox.isSelected()) {
 						JOptionPane.showMessageDialog(new JFrame(),"You must edit the comments as the dose is above the recommended amount.");
 						addPharmaceutical = false;
 					}
@@ -332,13 +332,11 @@ public class PharmaceuticalForm extends JFrame {
 		totalNumberOfContainersLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		cPanel.add(totalNumberOfContainersLabel);
 		
-		totalNumberOfContainersField = new JTextField();
+		totalNumberOfContainersField = new JTextField("0");
 		totalNumberOfContainersField.setEditable(false);
 		cPanel.add(totalNumberOfContainersField);
 		totalNumberOfContainersField.setColumns(10);
-		
-		//totalNumberOfContainersField.setText(String.valueOf(prescription.getNumberOfContainers()));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		tablePanel.add(scrollPane, BorderLayout.CENTER);
