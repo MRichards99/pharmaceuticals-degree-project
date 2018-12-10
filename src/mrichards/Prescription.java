@@ -40,7 +40,6 @@ public class Prescription {
 			PrescriptionItem newItem = new PrescriptionItem(pharmaceuticalName, duration, prescribedDailyDose, containerSize, overTheCounter, comments);
 			prescriptionItems.add(newItem);
 		}
-		setNumberOfContainers();
 		setNumberOfPharmaceuticals();
 	}
 	
@@ -51,7 +50,6 @@ public class Prescription {
 				prescriptionItems.remove(i);
 			}
 		}
-		setNumberOfContainers();
 		setNumberOfPharmaceuticals();
 	}
 	
@@ -59,8 +57,19 @@ public class Prescription {
 		// Using clear() instead of removeAll() due to decreased time complexity
 		// clear() is O(n) whereas removeAll() is O(n^2)
 		prescriptionItems.clear();
-		setNumberOfContainers();
 		setNumberOfPharmaceuticals();
+	}
+	/*
+	 * Gets a PrescriptionItem object based on the passed pharmaceutical name
+	 */
+	public PrescriptionItem getSelectedPrescriptionItem(String pharmaceuticalName) {
+		PrescriptionItem selectedItem = null;
+		for (int i = 0; i < prescriptionItems.size(); i++) {
+			if (pharmaceuticalName.equals(prescriptionItems.get(i).getPharmaceuticalName())) {
+				selectedItem = prescriptionItems.get(i);
+			}
+		}
+		return selectedItem;
 	}
 
 	/*
@@ -83,7 +92,7 @@ public class Prescription {
 		return numberOfContainers;
 	}
 
-	private void setNumberOfContainers() {
+	public void setNumberOfContainers() {
 		numberOfContainers = 0;
 		for (int i = 0; i < prescriptionItems.size(); i++) {
 			numberOfContainers += prescriptionItems.get(i).getNumberOfContainers();

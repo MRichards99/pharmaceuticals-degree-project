@@ -362,7 +362,8 @@ public class PharmaceuticalForm extends JFrame {
 		editComments.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				String selectedPharmaceuticalName = (String) table.getValueAt(table.getSelectedRow(), 0);
+				PrescriptionItem selectedPrescriptionItem = prescription.getSelectedPrescriptionItem(selectedPharmaceuticalName);
 			}
 		});
 		tablePopupMenu.add(editComments);
@@ -371,7 +372,15 @@ public class PharmaceuticalForm extends JFrame {
 		decrementDose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// Get highlighted pharmaceutical from prescription item
 				
+				// Gets pharmaceutical name of highlighted row
+				String selectedPharmaceuticalName = (String) table.getValueAt(table.getSelectedRow(), 0);
+				PrescriptionItem selectedPrescriptionItem = prescription.getSelectedPrescriptionItem(selectedPharmaceuticalName);
+				
+				// Decrements dose value and updates table
+				selectedPrescriptionItem.setDailyDosage(selectedPrescriptionItem.getPrescribedDailyDose() - 1);
+				updateTable();
 			}
 		});
 		
@@ -389,7 +398,6 @@ public class PharmaceuticalForm extends JFrame {
 		});
 		
 		tablePopupMenu.add(decrementDose);
-		addPopup(scrollPane, tablePopupMenu);
 		table.setModel(tableModel);
 		scrollPane.setViewportView(table);
 		
@@ -475,28 +483,12 @@ public class PharmaceuticalForm extends JFrame {
 		}
 		
 		updateTotalPrescriptionItemsField();
+		prescription.setNumberOfContainers();
 		totalNumberOfContainersField.setText(String.valueOf(prescription.getNumberOfContainers()));
 	}
 	
 	public void updateTotalPrescriptionItemsField() {
 		totalPrescriptionItemsField.setText(String.valueOf(prescription.getNumberOfPharmaceuticals()));
-	}
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
 	}
 }
 	
