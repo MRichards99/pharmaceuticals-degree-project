@@ -364,6 +364,13 @@ public class PharmaceuticalForm extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String selectedPharmaceuticalName = (String) table.getValueAt(table.getSelectedRow(), 0);
 				PrescriptionItem selectedPrescriptionItem = prescription.getSelectedPrescriptionItem(selectedPharmaceuticalName);
+				
+				// Open new jframe w/ text area to edit the comments 
+				// Which you get from the selectedPrescriptionItem
+				// JOptionPane.showMessageDialog(new JFrame(),"You must edit the comments as the dose is above the recommended amount.");
+				String editedComments = JOptionPane.showInputDialog(new JFrame(), "Edit the comment of the pharmaceutical you selected:", selectedPrescriptionItem.getComments());
+				selectedPrescriptionItem.setComments(editedComments);
+				updateTable();
 			}
 		});
 		tablePopupMenu.add(editComments);
