@@ -8,10 +8,9 @@ public class Pharmaceutical {
 	private String description;
 	private char medicationType;
 	private int recommendedDailyDose;
-	
-	
+
+
 	public Pharmaceutical() {
-		
 	}
 	
 	public Pharmaceutical(int pharmaceuticalID, SpecialRequirements specialRequirementID, String pharmaceuticalName,
@@ -24,17 +23,17 @@ public class Pharmaceutical {
 		setMedicationType(medicationType);
 		setRecommendedDailyDose(recommendedDailyDose);
 	}
-	
+
 	public String getDisplayComments() {
 		// Description
 		String displayComments = "";
 		displayComments = this.getDescription() + "; ";
-		
+
 		// Pharmaceutical available over the counter
 		if (this.getSpecialRequirementID().isAvailableOverTheCounter()) {
 			displayComments += "Available over the counter and maybe cheaper; ";
 		}
-		
+
 		// Amount and type of pharmaceutical
 		switch (this.getSpecialRequirementID().getContainerType()) {
 			case "Bottle":
@@ -50,12 +49,11 @@ public class Pharmaceutical {
 				displayComments += "Comes in a " + this.getSpecialRequirementID().getContainerSize() + "ml phial; ";
 				break;
 		}
-		
+
 		// Whether pharmaceutical requires fridge storage
 		if (this.getSpecialRequirementID().isStoreInFridge() == 1) {
 			displayComments += "MUST BE STORED IN FRIDGE; ";
 		}
-		
 		return displayComments;
 	}
 	

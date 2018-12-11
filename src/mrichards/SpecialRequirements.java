@@ -8,7 +8,6 @@ public class SpecialRequirements {
 	private boolean availableOverTheCounter;
 	
 	public SpecialRequirements() {
-		
 	}
 	
 	public SpecialRequirements(int specialRequirementID, int containerSize, String containerType, Integer storeInFridge, boolean availableOverTheCounter) {

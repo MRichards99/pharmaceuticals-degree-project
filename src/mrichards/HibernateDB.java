@@ -20,16 +20,12 @@ public class HibernateDB {
 	public HibernateDB() {
 		// Creates session factory
 		try {
-			// Below single line of code has issues with exceptions
-			//factory = new Configuration().configure().buildSessionFactory();
-			
 			Configuration configuration = new Configuration().addClass(mrichards.Pharmaceutical.class).addClass(mrichards.SpecialRequirements.class);
 			configuration.configure();
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 			factory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (Throwable e) {
 			System.out.println("Failed to create sessionFactory object:" + e);
-			//throw new ExceptionInInitializerError(e);
 			e.printStackTrace();
 		}
 	}
@@ -84,8 +80,6 @@ public class HibernateDB {
 			selectedPharmaceutical = pharmaceutcials.get(0);
 		} catch (HibernateException e) {
 			e.printStackTrace();
-		} finally {
-			//session.close();
 		}
 		return selectedPharmaceutical;
 		

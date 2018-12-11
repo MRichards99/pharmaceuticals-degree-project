@@ -1,8 +1,6 @@
 package mrichards;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +14,6 @@ import javax.swing.JTextField;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import java.awt.GridLayout;
-import java.awt.FlowLayout;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -36,8 +33,6 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JPopupMenu;
@@ -53,8 +48,6 @@ public class PharmaceuticalForm extends JFrame {
 	private JComboBox pharmaceuticalNameComboBox;
 	private JTable table;
 	private JLabel dailyDoseDisplay;
-	private JSpinner prescribedDailyDoseSelect;
-	private JTextArea pharmaceuticalDescriptionTextArea;
 	private Pharmaceutical currentPharmaceutical;
 	private Prescription prescription = new Prescription();
 	DefaultTableModel tableModel;
@@ -62,7 +55,7 @@ public class PharmaceuticalForm extends JFrame {
 	/**
 	 * Create and open form.
 	 */
-	 
+
 	public void createForm() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -79,8 +72,7 @@ public class PharmaceuticalForm extends JFrame {
 	public PharmaceuticalForm() {
 		// Creating connection with Hibernate
 		HibernateDB databaseConnection = new HibernateDB();
-		
-		
+
 		// General frame configuration
 		setPreferredSize(new Dimension(800, 800));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,7 +81,7 @@ public class PharmaceuticalForm extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		// Configuring optionsPanel
 		JPanel optionsPanel = new JPanel();
 		contentPane.add(optionsPanel, BorderLayout.NORTH);
@@ -376,8 +368,6 @@ public class PharmaceuticalForm extends JFrame {
 		decrementDose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Get highlighted pharmaceutical from prescription item
-				
 				// Gets pharmaceutical name of highlighted row
 				String selectedPharmaceuticalName = (String) table.getValueAt(table.getSelectedRow(), 0);
 				PrescriptionItem selectedPrescriptionItem = prescription.getSelectedPrescriptionItem(selectedPharmaceuticalName);
@@ -428,8 +418,6 @@ public class PharmaceuticalForm extends JFrame {
 		
 		// Centre align table headers
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-		
-		//table.
 		
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.EAST);
