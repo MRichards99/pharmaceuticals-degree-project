@@ -155,7 +155,7 @@ public class PharmaceuticalForm extends JFrame {
 		optionsPanel.add(addButton, gbc_addButton);
 		
 		JSpinner prescribedDailyDoseSelect = new JSpinner();
-		SpinnerNumberModel dailyDoseModel = new SpinnerNumberModel(new Integer(0), new Integer(0), new Integer(1), new Integer(1));
+		SpinnerNumberModel dailyDoseModel = new SpinnerNumberModel(new Integer(1), new Integer(1), new Integer(1), new Integer(1));
 		prescribedDailyDoseSelect.setEnabled(false);
 		
 		prescribedDailyDoseSelect.setModel(dailyDoseModel);
@@ -192,6 +192,24 @@ public class PharmaceuticalForm extends JFrame {
 		gbc_addCommentCheckBox.gridy = 1;
 		optionsPanel.add(addCommentCheckBox, gbc_addCommentCheckBox);
 		
+		JCheckBox exceedDailyDoseCheckBox = new JCheckBox("OK to Exceed Daily Dose?");
+		GridBagConstraints gbc_exceedDailyDoseCheckBox = new GridBagConstraints();
+		gbc_exceedDailyDoseCheckBox.fill = GridBagConstraints.BOTH;
+		gbc_exceedDailyDoseCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_exceedDailyDoseCheckBox.gridx = 2;
+		gbc_exceedDailyDoseCheckBox.gridy = 2;
+		optionsPanel.add(exceedDailyDoseCheckBox, gbc_exceedDailyDoseCheckBox);
+		exceedDailyDoseCheckBox.setEnabled(false);
+		
+		exceedDailyDoseCheckBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
+					addButton.setEnabled(exceedDailyDoseCheckBox.isSelected());
+				}
+			}
+		});
+		
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -224,26 +242,11 @@ public class PharmaceuticalForm extends JFrame {
 													 currentPharmaceutical.getSpecialRequirementID().isAvailableOverTheCounter(),
 													 pharmaceuticalDescription);
 					updateTable();
+					exceedDailyDoseCheckBox.setSelected(false);
+					prescribedDailyDoseSelect.setValue(Integer.valueOf(currentPharmaceutical.getRecommendedDailyDose()));
+					addCommentCheckBox.setSelected(false);
 				}
 			}	
-		});
-		
-		JCheckBox exceedDailyDoseCheckBox = new JCheckBox("OK to Exceed Daily Dose?");
-		GridBagConstraints gbc_exceedDailyDoseCheckBox = new GridBagConstraints();
-		gbc_exceedDailyDoseCheckBox.fill = GridBagConstraints.BOTH;
-		gbc_exceedDailyDoseCheckBox.insets = new Insets(0, 0, 0, 5);
-		gbc_exceedDailyDoseCheckBox.gridx = 2;
-		gbc_exceedDailyDoseCheckBox.gridy = 2;
-		optionsPanel.add(exceedDailyDoseCheckBox, gbc_exceedDailyDoseCheckBox);
-		exceedDailyDoseCheckBox.setEnabled(false);
-		
-		exceedDailyDoseCheckBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if ((int) prescribedDailyDoseSelect.getValue() > currentPharmaceutical.getRecommendedDailyDose()) {
-					addButton.setEnabled(exceedDailyDoseCheckBox.isSelected());
-				}
-			}
 		});
 		
 		pharmaceuticalNameComboBox = new JComboBox();

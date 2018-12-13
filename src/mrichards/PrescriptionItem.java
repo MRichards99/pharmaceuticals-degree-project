@@ -80,7 +80,11 @@ public class PrescriptionItem {
 
 	// Comments set in Prescription class, therefore a public method
 	public void setComments(String comments) {
-		// Not locked down to alphanumerics due to use of semi colons
+		int textAreaLength = comments.length();
+		String finalSection = comments.substring(textAreaLength - 3, textAreaLength);
+		if (! finalSection.equals(";\n")) {
+			comments += ";\n";
+		}
 		this.comments = comments;
 	}
 	
