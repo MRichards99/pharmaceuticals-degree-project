@@ -11,7 +11,7 @@ public class PrescriptionItem {
 	public PrescriptionItem(String pharmaceuticalName, int duration, int prescribedDailyDose, 
 							int containerSize, boolean counterAvailability, String comments) {
 		setPharmaceuticalName(pharmaceuticalName);
-		setPrescribedDailyDose(prescribedDailyDose);
+		setDailyDosage(prescribedDailyDose);
 		setDuration(duration);
 		setContainerSize(containerSize);
 		setCounterAvailability(counterAvailability);
@@ -34,10 +34,6 @@ public class PrescriptionItem {
 
 	public int getPrescribedDailyDose() {
 		return prescribedDailyDose;
-	}
-	
-	private void setPrescribedDailyDose(int prescribedDailyDose) {
-		this.prescribedDailyDose = prescribedDailyDose;
 	}
 
 	public void setDailyDosage(int prescribedDailyDose) {
